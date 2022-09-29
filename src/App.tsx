@@ -1,12 +1,12 @@
 import { useState } from "react";
 import "aframe";
 import ComposantExample from './components/ComposantExample'
+import Accueil from './components/Accueil'
 
 function App() {
   return (
     <main>
-      <h1>Coucou</h1>
-      <ComposantExample></ComposantExample>
+      <Accueil></Accueil>
     </main>
   );
 }
