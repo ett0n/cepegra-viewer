@@ -2,13 +2,13 @@ import { useState } from "react";
 import "aframe";
 import ComposantExample from './components/ComposantExample'
 import BackgroundChooser from "./components/BackgroundChooser";
+import TestBck from "./components/TestBckimg";
 
 function App() {
   return (
     <main>
-      <h1>Coucou</h1>
-  
-      <BackgroundChooser></BackgroundChooser>
+
+      <TestBck></TestBck>
     </main>
   );
 }
