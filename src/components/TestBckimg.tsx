@@ -4,6 +4,8 @@ const TestBck = () => {
   return (
     <>
       <h2>LO£PASA</h2>
+      {test && test.filter((back) => back.id === "2").map((back) => back.img )}
+      <img src={test.filter((back) => back.id === "2").map((back) => back.img )[0]}/>
       <div className="inner">
         {
           test && test.map(back => {
@@ -12,7 +14,7 @@ const TestBck = () => {
                 <img src={back.img} />
                 <br />
                 {back.text}
-                <div><img src={back.img[2]} /></div>
+                <div><img src={back.img} /></div>
               </div>
             )
           })
@@ -21,8 +23,8 @@ const TestBck = () => {
 
       <div>
       {test2.images.map((image, i) => (
-        <div className="item" key={"1"}>
-          <img src={`${image.img}`} alt={image.text} key={"1"} />
+        <div className="item" key={i}>
+          <img src={`${image.img}`} alt={image.text} key={i} />
         </div>
       ))}
     </div>

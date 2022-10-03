@@ -1,8 +1,18 @@
 const Menu = () => {
   return (
     <>
-      <h2>baaaaaaah</h2>
-      <button className="btn">Ceci est un bouton</button>
+           {menuPages.map( (el, i) => (
+        <li>
+          <a 
+            href={el.name} 
+            key={i}
+            onClick={handleNavClick}
+            className='flex-col'
+            >
+            <i className={'fa-solid fa-2x  ' + el.class}></i>
+            {el.name}</a>
+        </li>
+      ))}
     </>
   )
 }
