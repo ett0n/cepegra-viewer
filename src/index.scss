@@ -3,7 +3,16 @@
 @tailwind utilities;
 
 .menu-open {
-  @apply bg-red-50 h-screen z-40 absolute overflow-hidden
+  @apply h-screen z-40 absolute overflow-hidden
+}
+
+.background-image-blurred {
+  filter: blur(5px);
+}
+
+
+main {
+  background-image: src(".assets/background.jpeg");
 }
 
 .menu-close {

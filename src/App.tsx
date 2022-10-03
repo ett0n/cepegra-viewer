@@ -12,6 +12,7 @@ function App(): JSX.Element {
   const pages = ['ComposantExample', 'Accueil', 'Credits', 'Notifications'];
 
   const menuPages = [
+    {name: 'Accueil', class: 'fa-home'},
     {name: 'Notifications', class: 'fa-envelope'},
     {name: 'Gallery', class: 'fa-film'},
     {name: 'Credits', class: 'fa-laptop-code'}
@@ -31,10 +32,12 @@ function App(): JSX.Element {
     console.log('click menu')
     const toggleMenu = document.querySelector('.menuToggle')
     const menu = document.querySelector('.menu')
+    const bgImg = document.querySelector('.background-image')
     toggleMenu.classList.toggle('fa-bars')
     toggleMenu.classList.toggle('fa-xmark')
     menu.classList.toggle('menu-close')
     menu.classList.toggle('menu-open')
+    bgImg.classList.toggle('background-image-blurred')
   }
 
   const handleNavClick = (ev: React.MouseEvent<HTMLAnchorElement>) => {
@@ -57,12 +60,14 @@ function App(): JSX.Element {
         {pages.map( (page, i) => ( <li><a href={page} className={location === page ? "active" : ""} key={i} onClick={handleNavClick}><i className="fa-solid fa-laptop-code"></i>{page}</a></li>))}
       </ul>)} 
       */}
-<nav className="py-8 px-4 absolute z-50 right-0">
-  <a onClick={HandleMenu}>
-    <i className="fa-solid fa-bars fa-3x menuToggle"></i>
-    </a>
-</nav>
-<ul className='menu grid grid-cols-3 pt-32 menu-close w-screen'>
+
+{ location !== 'Accueil' && (
+    <><nav className="py-8 px-4 absolute z-50 right-0">
+    <a onClick={HandleMenu}>
+      <i className="fa-solid fa-bars fa-3x menuToggle"></i>
+      </a>
+  </nav>
+    <ul className='menu grid grid-cols-3 pt-32 menu-close grid-flow-row '>
       {menuPages.map( (el, i) => (
         <li>
           <a 
@@ -81,7 +86,7 @@ function App(): JSX.Element {
       Retour au jeu
       </a>
       </li>
-</ul>
+</ul></>)}
 
       {location === "Accueil" && (<Accueil />) }
       {location === "ComposantExample" && (<ComposantExample />) }  
