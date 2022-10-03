@@ -6,12 +6,13 @@ import TestBckimg from "./components/TestBckimg";
 import Test4 from "./components/Test4";
 import Tester3 from "./components/Tester3";
 import Tester5 from "./components/Tester5";
+import Tester7 from "./components/Tester7";
 
 function App() {
   return (
     <main>
 
-      <BackgroundChooser></BackgroundChooser>
+      <Tester7></Tester7>
 
     </main>
   );

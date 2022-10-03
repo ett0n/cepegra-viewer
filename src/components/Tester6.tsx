@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from 'react';
 import test from '../test.json'
 const Tester6 = () => {
     return (
