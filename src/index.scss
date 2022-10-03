@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.menu-open {
+  @apply bg-red-50 h-screen z-40 absolute overflow-hidden
+}
+
+.menu-close {
+  display:none;
+}
+
+.li--backToGame {
+  align-self: flex-end;
+  justify-self: center;
+  position: absolute;
+}

@@ -13,8 +13,8 @@ const Accueil = () => {
       <div className="flex"><input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" /><button className="btn"><i className="fa-solid fa-chevron-right"></i></button></div>
     </section>
     <footer className="flex justify-around py-6">
-      <img src="./assets/logo-cepegra.png" alt="Logo du Cepegra" width="50" height="25" className="w-3/12"/>
-      <img src="./assets/logo-forem.png" alt="Logo du Forem" height="25" className="w-3/12"/>
+      <img src="./assets/logo-cepegra.png" alt="Logo du Cepegra" width="50" className="w-3/12"/>
+      <img src="./assets/logo-forem.png" alt="Logo du Forem" className="w-3/12"/>
     </footer>
     </section>
   )
