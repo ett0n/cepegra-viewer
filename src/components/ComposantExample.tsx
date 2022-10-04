@@ -1,11 +1,10 @@
-const Menu = () => {
+const ComposantExample = () => {
   return (
-    <>
+    <main>
       <h2>baaaaaaah</h2>
-      <img src="./assets/background.jpeg" className="background-image" alt="" />
       <button className="btn">Ceci est un bouton</button>
-    </>
+    </main>
   )
 }
 
-export default Menu
+export default ComposantExample

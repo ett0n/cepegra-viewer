@@ -3,7 +3,19 @@
 @tailwind utilities;
 
 .menu-open {
-  @apply h-screen z-40 absolute overflow-hidden
+  @apply h-screen z-40 absolute overflow-hidden;
+  &:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url("./assets/background-2d.jpg");
+    background-size: cover;
+    width: 110% !important;
+    filter: blur(5px);
+  }
 }
 
 .background-image-blurred {
@@ -11,8 +23,14 @@
 }
 
 
+body {
+  background-image: url("./assets/background-2d.jpg");
+  background-size: cover;
+  height: 100vh;
+}
+
 main {
-  background-image: src(".assets/background.jpeg");
+  padding-top: 8rem;
 }
 
 .menu-close {

@@ -1,5 +1,9 @@
 const Gallery = () => {
-  return <h1>bonjour gallerie</h1>
+  return (
+  <main>
+    <h1>bonjour gallerie</h1>
+  </main>
+  )
 }
 
 export default Gallery
