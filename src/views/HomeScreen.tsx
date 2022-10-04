@@ -1,7 +1,12 @@
 const HomeScreen = () => {
   return (
     <main>
-      <h1>Hello HomeScreen</h1>
+      <section className="border-2 border-red-700 h-2/3">
+        <h1>Hello HomeScreen</h1>
+      </section>
+      <section className="absolute w-screen bottom-8 flex flex-col gap-8">
+        <a className="shutter"></a>
+        <button className="btn btn-ar"><i className="fa-solid fa-child-reaching"></i> Jouons</button></section>
     </main>
   )
 }

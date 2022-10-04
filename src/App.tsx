@@ -38,15 +38,12 @@ function App(): JSX.Element {
     toggleMenu.classList.toggle('fa-xmark')
     menu.classList.toggle('menu-close')
     menu.classList.toggle('menu-open')
-    bgImg.classList.toggle('background-image-blurred')
   }
 
   const handleNavClick = (ev: React.MouseEvent<HTMLAnchorElement>) => {
     ev.preventDefault();
     setLocation(ev.currentTarget.getAttribute('href')!)
-    const menu = document.querySelector('.menu');
-    menu.classList.remove('menu-open')
-    menu.classList.add('menu-close')
+    handleMenu();
   }
 
   useEffect ( () => {
@@ -58,22 +55,17 @@ function App(): JSX.Element {
 
 
   return (
-    <section>
-     {/* Menu is hidden if we're on sectionmainpage:
-     { location != "Accueil" && ( <ul className='menu menu-vertical lg:menu-horizontal bg-base-100 rounded-box'>
-        {pages.map( (page, i) => ( <li><a href={page} className={location === page ? "active" : ""} key={i} onClick={handleNavClick}><i className="fa-solid fa-laptop-code"></i>{page}</a></li>))}
-      </ul>)} 
-      */}
+    <>
 
 { location !== 'Accueil' && (
-    <><nav className="py-8 px-4 absolute z-50 right-0">
+    <header className="h-24"><nav className="py-8 px-4 absolute z-50 right-0">
     <a onClick={handleMenu}>
       <i className="fa-solid fa-bars fa-3x menuToggle text-white"></i>
       </a>
   </nav>
     <ul className='menu grid grid-cols-3 pt-32 menu-close grid-rows-5 text-white'>
       {menuPages.map( (el, i) => (
-        <li>
+        <li key={i} >
           <a 
             href={el.name} 
             key={i}
@@ -90,14 +82,15 @@ function App(): JSX.Element {
       Retour au jeu
       </a>
       </li>
-</ul></>)}
+</ul></header>)}
 
       {location === "Accueil" && (<Accueil />) }
+      {location === "HomeScreen" && (<HomeScreen />) }
       {location === "ComposantExample" && (<ComposantExample />) }  
       {location === "Credits" && (<Credits />)}   
       {location === "Notifications" && (<Notifications />)}
       {location === "Gallery" && (<Gallery />)} 
-    </section>
+    </>
     
   );
 }
