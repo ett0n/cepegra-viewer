@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, HtmlHTMLAttributes } from 'react';
 import axios from "axios";
-
+import "../index.scss";
 
 // Data
 import data from '../data.json';
@@ -15,7 +15,6 @@ try {
 } catch (error) {
   const response = await axios.get('../data.json');
   console.log(response);
-
   }
 
 
@@ -23,6 +22,8 @@ const Carousel = () => {
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const carousel = useRef(null);
+
+  const [isActive, setIsActive] = useState(false);
 
   const movePrev = () => {
     if (currentIndex > 0) {
@@ -32,11 +33,13 @@ const Carousel = () => {
 
   const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
     const url = ev.target.dataset.url
-    console.log(url)
-    const url2 = ev.target.dataset
-    console.log(url2)
+    const id = parseInt(ev.target.dataset.id)
+    console.log(id)
     document.body.style.backgroundImage = `url(${url})`
+    setIsActive(current => !current);
+    document.querySelector(`[data-id=${id}]`).style.display = 'none'
   }
+
 
   const moveNext = () => {
     if (
@@ -129,11 +132,15 @@ const Carousel = () => {
             return (
               <div
                 key={index}
+
                 className="carousel-item text-center relative w-64 h-64 snap-start"
+                
               >
                 <a
-                  href={resource.link}
+                  href="#"
                   onClick={changeBackground}
+                  data-url={resource.imageUrl}
+                  data-id={index}
                   className="h-full w-full aspect-square block bg-origin-padding bg-left-top bg-cover bg-no-repeat z-0"
                   style={{ backgroundImage: `url(${resource.imageUrl || ''})` }}
                 >
@@ -143,11 +150,11 @@ const Carousel = () => {
                     className="w-full aspect-square hidden"
                   />
                 </a>
-                <a
+                
+                 <a
                   href="#"
-                  onClick={changeBackground}
-                  className="h-full w-full aspect-square block absolute top-0 left-0 transition-opacity duration-300 opacity-0 hover:opacity-100 bg-blue-800/75 z-10"
-                  data-url={resource.imageUrl}
+                  className={isActive ? 'bg-salmon' : 'fdp'}
+                
                 >
                   <h3 className="text-white py-6 px-3 mx-auto text-xl">
                     {resource.title}
