@@ -1,8 +1,22 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, HtmlHTMLAttributes } from 'react';
+import axios from "axios";
+
 
 // Data
 import data from '../data.json';
+const lol = data;
 
+
+
+try {
+  const response = await axios.get('https://jsonlaceholder.typicode.com/');
+  // Success 🎉
+  console.log("C GAGNE LOL");
+} catch (error) {
+  const response = await axios.get('../data.json');
+  console.log(response);
+
+  }
 
 
 const Carousel = () => {
@@ -16,15 +30,13 @@ const Carousel = () => {
     }
   };
 
-  function changeBackground() {
-    document.body.style.backgroundImage = `url('https://c.tenor.com/B8fw0mLfHKEAAAAC/vilebrequin-vilebrequin-pierre-chabrier.gif')`;
+  const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+    const url = ev.target.dataset.url
+    console.log(url)
+    const url2 = ev.target.dataset
+    console.log(url2)
+    document.body.style.backgroundImage = `url(${url})`
   }
-
-// Hypothèse 2
-//   function changeBackground(e) {
-//   document.body.style.backgroundImage = `url('${e.target.value}.png')`;
-// }
-
 
   const moveNext = () => {
     if (
@@ -35,7 +47,7 @@ const Carousel = () => {
     }
   };
 
-  const isDisabled = (direction) => {
+  const isDisabled = (direction: string) => {
     if (direction === 'prev') {
       return currentIndex <= 0;
     }
@@ -129,13 +141,13 @@ const Carousel = () => {
                     src={resource.imageUrl || ''}
                     alt={resource.title}
                     className="w-full aspect-square hidden"
-                   
                   />
                 </a>
                 <a
                   href="#"
                   onClick={changeBackground}
                   className="h-full w-full aspect-square block absolute top-0 left-0 transition-opacity duration-300 opacity-0 hover:opacity-100 bg-blue-800/75 z-10"
+                  data-url={resource.imageUrl}
                 >
                   <h3 className="text-white py-6 px-3 mx-auto text-xl">
                     {resource.title}
