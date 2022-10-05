@@ -14,11 +14,9 @@ function App() {
   return (
     <main>
       
-      <Tester8>
-        <CarouselItem>Item 1</CarouselItem>
-        <CarouselItem>Item 2</CarouselItem>
-        <CarouselItem>Item 3</CarouselItem>
-      </Tester8>
+      <Tester7>
+    
+      </Tester7>
 
     </main>
   );

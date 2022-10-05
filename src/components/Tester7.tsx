@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect, HtmlHTMLAttributes } from 'react';
 import axios from "axios";
+import { useSwipeable } from "react-swipeable";
+
 import "../index.scss";
 
 // Data
@@ -18,18 +20,20 @@ try {
   }
 
 
-const Carousel = () => {
+const Tester7 = () => {
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const carousel = useRef(null);
 
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
 
   const movePrev = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prevState) => prevState - 1);
     }
   };
+  
+  
 
   const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
     const url = ev.target.dataset.url
@@ -37,9 +41,16 @@ const Carousel = () => {
     console.log(id)
     document.body.style.backgroundImage = `url(${url})`
     setIsActive(current => !current);
-    document.querySelector(`[data-id=${id}]`).style.display = 'none'
+    console.log(isActive);
+    // document.querySelector(`[data-id=${id}]`).style.display = 'none'
   }
 
+  const closeSelected = (event) => {
+    console.log(event.target.id);
+    console.log(event.target.value);
+    event.classList.remove( bg-salmon )
+    // setIsActive(current => !current);
+  }
 
   const moveNext = () => {
     if (
@@ -77,7 +88,9 @@ const Carousel = () => {
   }, []);
 
   return (
-    
+    <>
+
+   
     <div className="carousel my-12 mx-auto w-1/2">
       <div className="relative overflow-hidden">
         <div className="flex justify-between absolute top left w-full h-full">
@@ -152,9 +165,7 @@ const Carousel = () => {
                 </a>
                 
                  <a
-                  href="#"
-                  className={isActive ? 'bg-salmon' : 'fdp'}
-                
+                  href="#" data-id={index} onClick={closeSelected} className={isActive ? '' : 'bg-salmon'}
                 >
                   <h3 className="text-white py-6 px-3 mx-auto text-xl">
                     {resource.title}
@@ -166,7 +177,26 @@ const Carousel = () => {
         </div>
       </div>
     </div>
+
+    {/* Nav avec les bouttons */}
+
+    <div className="flex w-full justify-center">
+    <button
+            onClick={movePrev}
+            className="btn mx-2"
+            disabled={isDisabled('prev')}
+          >Précdent
+      </button>
+      <button
+            onClick={moveNext}
+            className="btn"
+            disabled={isDisabled('next')}
+          >Suivant
+      </button>
+    </div>
+
+</>
   );
 };
 
-export default Carousel;
+export default Tester7;
