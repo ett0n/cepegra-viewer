@@ -1,21 +1,46 @@
-import React, {useState} from 'react'
+// @ts-nocheck
+
+import Axios from 'axios'
+import React, {useState, useEffect } from 'react'
+import Form from '../components/Form'
+
+
 
 const Accueil = () => {
 
-  /* ----------- init ----------- */
-  const [user, setUser] = useState([
-    { name: 'JoliPseudo', image: ''}
-  ])
-
+  /* ----------- state ----------- */
+  // const [user, setUser] = useState({ name: 'JoliPseudo', image: ''})
+  const [user, setUser] = useState(['JoliPseudo'])
   const [pseudalInput, setPseudalInput] = useState<string>('')
+
+  const getDatas = async () => {
+    const apiDatas = await Axios.get('http://xrlab.cepegra.be:1337/api/appusers?populate=*')
+    const coucou = apiDatas.data.data.map( u  => u.attributes.pseudo)
+    console.log(`ceci est coucou: `, coucou)
+    setUser(coucou)
+    console.log(`ceci est user: `, user)
+    // porque no functionnar hijo 
+  }
+  useEffect( () => {
+    getDatas()
+  }, [])
+
 
   /* ---------- react ----------- */
   const connect = (ev: React.FormEvent) => {
     ev.preventDefault()
-    setPseudalInput('')
-    console.log('connection')
+    // pseudalInput == user.name ? alert("vous êtes connecté") : alert("Erreur de pseudo")
+    // setPseudalInput('')
+    console.log(user)
   }
 
+  const handleClick = () => {
+    console.log('handleClick')
+  }
+
+  const handleChange = (ev: any) => {
+    setPseudalInput(ev.target.value)
+  }
 
 
   /* ---------- render ---------- */
@@ -30,8 +55,9 @@ const Accueil = () => {
 <div className="flex flex-col w-full border-opacity-50">
   <div className="divider">Se connecter</div>
 </div>
+      <Form handleClick={handleClick} />
       <form className="flex" onSubmit={connect}>
-        <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" value={pseudalInput}/>
+        <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={handleChange} value={pseudalInput} />
         <button className="btn" role="submit" >
           <i className="fa-solid fa-chevron-right"></i>
         </button>
