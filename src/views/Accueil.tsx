@@ -1,25 +1,22 @@
 // @ts-nocheck
-
 import Axios from 'axios'
-import React, {useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Form from '../components/Form'
+import type Appusers from '../types/Appusers'
 
 
-
-const Accueil = () => {
+const Accueil: React.FC<props> = ({location, setLocation}) => {
 
   /* ----------- state ----------- */
-  // const [user, setUser] = useState({ name: 'JoliPseudo', image: ''})
   const [user, setUser] = useState(['JoliPseudo'])
   const [pseudalInput, setPseudalInput] = useState<string>('')
+  const [data, setData] = useState<User>('')
 
   const getDatas = async () => {
     const apiDatas = await Axios.get('http://xrlab.cepegra.be:1337/api/appusers?populate=*')
     const coucou = apiDatas.data.data.map( u  => u.attributes.pseudo)
-    console.log(`ceci est coucou: `, coucou)
     setUser(coucou)
-    console.log(`ceci est user: `, user)
-    // porque no functionnar hijo 
+    console.log(apiDatas)
   }
   useEffect( () => {
     getDatas()
@@ -29,9 +26,19 @@ const Accueil = () => {
   /* ---------- react ----------- */
   const connect = (ev: React.FormEvent) => {
     ev.preventDefault()
-    // pseudalInput == user.name ? alert("vous êtes connecté") : alert("Erreur de pseudo")
-    // setPseudalInput('')
-    console.log(user)
+    if (user.find( el => el === pseudalInput)) { 
+      sessionStorage.setItem('user', pseudalInput)
+      window.location = 'HomeScreen' 
+    } else {
+      const msg = document.querySelector('#msgUser')
+      msg.classList.remove('hidden')
+      msg.classList.add('msg')
+      setTimeout( () => {
+        msg.classList.add('hidden')
+        msg.classList.remove('msg')
+      }, 2000)
+    }
+    setPseudalInput('')
   }
 
   const handleClick = () => {
@@ -44,6 +51,7 @@ const Accueil = () => {
 
 
   /* ---------- render ---------- */
+  console.log(`user : `, user)
   return (
     <section className="flex flex-col justify-between h-screen">
       <button className="btn btn-block py-2 rounded-none btn-primary"><i className="fa-sharp fa-solid fa-download px-4"></i> Installer l'application</button>
@@ -56,11 +64,14 @@ const Accueil = () => {
   <div className="divider">Se connecter</div>
 </div>
       <Form handleClick={handleClick} />
-      <form className="flex" onSubmit={connect}>
-        <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={handleChange} value={pseudalInput} />
-        <button className="btn" role="submit" >
-          <i className="fa-solid fa-chevron-right"></i>
-        </button>
+      <form className="flex flex-col" onSubmit={connect}>
+        <div className="flex">
+          <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={handleChange} value={pseudalInput} />
+          <button className="btn" role="submit" >
+            <i className="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+        <div className='hidden flex' id="msgUser"><div><i class="fa-lg fa-solid fa-triangle-exclamation"></i><span>Erreur de pseudo</span></div></div>
       </form>
     </section>
     <footer className="flex justify-around py-6">

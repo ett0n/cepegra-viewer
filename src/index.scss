@@ -82,3 +82,8 @@ i.fa-child-reaching{
   width: 50%;
   margin: 0 auto;
 }
+
+.msg {
+  @apply alert alert-error shadow-lg absolute bottom-[120px] w-2/3;
+  left: calc(50% - 33vw );
+}

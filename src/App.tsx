@@ -9,8 +9,8 @@ import Gallery from "./views/Gallery";
 
 
 function App(): JSX.Element {
-  const [location, setLocation] = useState('ComposantExample');
-  const pages = ['ComposantExample', 'Accueil', 'Credits', 'Notifications'];
+  const [location, setLocation] = useState('HomeScreen');
+  const pages = ['Accueil', 'HomeScreen', 'Credits', 'Notifications', 'Gallery'];
 
   const menuPages = [
     {name: 'Accueil', class: 'fa-home'},
@@ -84,7 +84,7 @@ function App(): JSX.Element {
       </li>
 </ul></header>)}
 
-      {location === "Accueil" && (<Accueil />) }
+      {location === "Accueil" && (<Accueil location={location} setLocation={setLocation} />) }
       {location === "HomeScreen" && (<HomeScreen />) }
       {location === "ComposantExample" && (<ComposantExample />) }  
       {location === "Credits" && (<Credits />)}   
