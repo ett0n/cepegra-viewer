@@ -29,11 +29,7 @@ const Accueil: React.FC<props> = () => {
   const connect = (ev: React.FormEvent) => {
     ev.preventDefault()
     const temp = user.filter( el => el.pseudo === pseudalInput)
-    console.log(temp[0].id)
-    if (temp[0].pseudo === pseudalInput) { 
-      sessionStorage.setItem('userInfo', JSON.stringify(temp))
-      window.location = 'HomeScreen' 
-    } else {
+    if (temp.length === 0) { 
       const msg = document.querySelector('#msgUser')
       msg.classList.remove('hidden')
       msg.classList.add('msg')
@@ -41,6 +37,9 @@ const Accueil: React.FC<props> = () => {
         msg.classList.add('hidden')
         msg.classList.remove('msg')
       }, 2000)
+    } else if (temp[0].pseudo === pseudalInput ) {
+      sessionStorage.setItem('userInfo', JSON.stringify(temp))
+      window.location = 'HomeScreen'
     }
     setPseudalInput('')
   }
