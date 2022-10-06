@@ -4,30 +4,35 @@ import React, { useState, useEffect } from 'react'
 import Form from '../components/Form'
 import type Appusers from '../types/Appusers'
 
+// interface UserInfo {id: number; pseudo: string;}
 
-const Accueil: React.FC<props> = ({location, setLocation}) => {
+const Accueil: React.FC<props> = () => {
 
   /* ----------- state ----------- */
-  const [user, setUser] = useState(['JoliPseudo'])
+  const [user, setUser] = useState<{id: number; pseudo: string;}[]>()
   const [pseudalInput, setPseudalInput] = useState<string>('')
-  const [data, setData] = useState<User>('')
+  const [data, setData] = useState<User>()
 
   const getDatas = async () => {
     const apiDatas = await Axios.get('http://xrlab.cepegra.be:1337/api/appusers?populate=*')
-    const coucou = apiDatas.data.data.map( u  => u.attributes.pseudo)
+    const coucou = apiDatas.data.data.map( u  => {return {id: u.id, pseudo : u.attributes.pseudo}})
+    console.log(coucou)
     setUser(coucou)
-    console.log(apiDatas)
+    setData(apiDatas.data.data)
   }
   useEffect( () => {
     getDatas()
   }, [])
 
 
+
   /* ---------- react ----------- */
   const connect = (ev: React.FormEvent) => {
     ev.preventDefault()
-    if (user.find( el => el === pseudalInput)) { 
-      sessionStorage.setItem('user', pseudalInput)
+    const temp = user.filter( el => el.pseudo === pseudalInput)
+    console.log(temp[0].id)
+    if (temp[0].pseudo === pseudalInput) { 
+      sessionStorage.setItem('userInfo', JSON.stringify(temp))
       window.location = 'HomeScreen' 
     } else {
       const msg = document.querySelector('#msgUser')
@@ -51,8 +56,7 @@ const Accueil: React.FC<props> = ({location, setLocation}) => {
 
 
   /* ---------- render ---------- */
-  console.log(`user : `, user)
-  return (
+    return (
     <section className="flex flex-col justify-between h-screen">
       <button className="btn btn-block py-2 rounded-none btn-primary"><i className="fa-sharp fa-solid fa-download px-4"></i> Installer l'application</button>
       <h1 className="text-2xl font-bold text-center">je suis un logoooo lol</h1>
@@ -71,7 +75,7 @@ const Accueil: React.FC<props> = ({location, setLocation}) => {
             <i className="fa-solid fa-chevron-right"></i>
           </button>
         </div>
-        <div className='hidden flex' id="msgUser"><div><i class="fa-lg fa-solid fa-triangle-exclamation"></i><span>Erreur de pseudo</span></div></div>
+        <div className='hidden' id="msgUser"><div><i className="fa-lg fa-solid fa-triangle-exclamation"></i><span>Erreur de pseudo</span></div></div>
       </form>
     </section>
     <footer className="flex justify-around py-6">

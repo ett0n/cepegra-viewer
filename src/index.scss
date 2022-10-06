@@ -84,6 +84,6 @@ i.fa-child-reaching{
 }
 
 .msg {
-  @apply alert alert-error shadow-lg absolute bottom-[120px] w-2/3;
+  @apply alert alert-error shadow-lg absolute bottom-[120px] w-2/3 flex;
   left: calc(50% - 33vw );
 }

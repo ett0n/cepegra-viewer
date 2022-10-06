@@ -7,8 +7,12 @@ import Credits from "./views/Credits";
 import Notifications from "./views/Notifications";
 import Gallery from "./views/Gallery";
 
+// interface UserInfo {id: number; pseudo: string;}
+
 
 function App(): JSX.Element {
+  //state
+  // const userInfo = JSON.parse(sessionStorage.getItem('userInfo')) as UserInfo
   const [location, setLocation] = useState('HomeScreen');
   const pages = ['Accueil', 'HomeScreen', 'Credits', 'Notifications', 'Gallery'];
 
@@ -30,6 +34,15 @@ function App(): JSX.Element {
     }
   }, []);
 
+  useEffect ( () => {
+    document.title = location;
+    window.history.pushState(location, 'Title', '/' + location)
+  }, 
+  [location]
+  );
+
+  //react
+
   const handleMenu = () => {
     const toggleMenu = document.querySelector('.menuToggle')
     const menu = document.querySelector('.menu')
@@ -46,17 +59,11 @@ function App(): JSX.Element {
     handleMenu();
   }
 
-  useEffect ( () => {
-    document.title = location;
-    window.history.pushState(location, 'Title', '/' + location)
-  }, 
-  [location]
-  );
 
 
+//rendu
   return (
     <>
-
 { location !== 'Accueil' && (
     <header className="h-24"><nav className="py-8 px-4 absolute z-50 right-0">
     <a onClick={handleMenu}>
