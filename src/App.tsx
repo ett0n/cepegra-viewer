@@ -1,14 +1,14 @@
 import { useState } from "react";
-import Tester9 from "./components/Tester9";
-import Tester10 from "./components/Tester10";
+import Sliderpersonnage from "./components/Sliderpersonnage";
+import Sliderbackground from "./components/Sliderbackground";
 
 
 function App() {
   return (
     <main>
       
-      <Tester9></Tester9>
-      <Tester10></Tester10>
+      <Sliderpersonnage></Sliderpersonnage>
+      <Sliderbackground></Sliderbackground>
 
     </main>
   );

@@ -33,10 +33,10 @@ import data from '../data.json';
 
 
 
-const Tester10 = () => {
+const Sliderbackground = () => {
   return (
     <>
-       <Swiper slidesPerView={3} slidesPerColumn={2} spaceBetween={30} pagination={{
+       <Swiper slidesPerView={3} spaceBetween={30} pagination={{
   "clickable": true
   
 }} className="mySwiper">
@@ -49,4 +49,4 @@ const Tester10 = () => {
   )
 }
 
-export default Tester10
+export default Sliderbackground

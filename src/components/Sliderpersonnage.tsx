@@ -10,7 +10,7 @@
   import "swiper/css/pagination";
   import "swiper/css/navigation";
   
-  import sliderPerso from "./sliderPerso.scss";
+  import index from "./index.scss";
   
   // import required modules
   import { Pagination, Navigation } from "swiper";
@@ -32,13 +32,13 @@ import data from '../data.json';
     const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
 
       console.log("C clickay");
-      const url = ev.target.src
+      const url = ev.target
       console.log(url);
       document.body.style.backgroundImage = `url(${url})`
     }
     
   
-  const Tester9 = () => {
+  const Sliderpersonnage = () => {
 
     
     return (
@@ -63,4 +63,4 @@ import data from '../data.json';
 
 
 
-export default Tester9
+export default Sliderpersonnage
