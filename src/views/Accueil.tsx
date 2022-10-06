@@ -16,7 +16,6 @@ const Accueil: React.FC<props> = () => {
   const getDatas = async () => {
     const apiDatas = await Axios.get('http://xrlab.cepegra.be:1337/api/appusers?populate=*')
     const coucou = apiDatas.data.data.map( u  => {return {id: u.id, pseudo : u.attributes.pseudo}})
-    console.log(coucou)
     setUser(coucou)
     setData(apiDatas.data.data)
   }
