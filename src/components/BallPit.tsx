@@ -29,17 +29,19 @@ const Ball = (props) => {
 };
 
 const BallPit = () => {
-  return (
-    <group>
-    {new Array(512).fill(0).map((v, i) => {
-      return (
-        <Ball
-          key={`${i}-ball`}
-          position={[polarRange(1, 10), polarRange(1, 10), polarRange(1, 3)]}
-        />
-      );
-    })}
-  </group>
-  )
+ 
+    return (
+      <group>
+        {new Array(512).fill(0).map((v, i) => {
+          return (
+            <Ball
+              key={`${i}-ball`}
+              position={[polarRange(1, 10), polarRange(1, 10), polarRange(1, 3)]}
+            />
+          );
+        })}
+      </group>
+    );
+ 
 }
 export default BallPit
