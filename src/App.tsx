@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { useEffect, useState } from "react";
 import "aframe";
 import ComposantExample from './components/ComposantExample'
@@ -12,7 +14,7 @@ import Gallery from "./views/Gallery";
 
 function App(): JSX.Element {
   //state
-  // const userInfo = JSON.parse(sessionStorage.getItem('userInfo')) as UserInfo
+  // const userInfo = JSON.parse(localStorage.getItem('userInfo')) as UserInfo
   const [location, setLocation] = useState('HomeScreen');
   const pages = ['Accueil', 'HomeScreen', 'Credits', 'Notifications', 'Gallery'];
 
@@ -59,12 +61,21 @@ function App(): JSX.Element {
     handleMenu();
   }
 
-
+  const handleDisconnect = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+    ev.preventDefault();
+    if (confirm(`Voulez-vous vraiment vous déconnecter ? Vous ne pourrez plus accéder à vos personnage sans votre mot de passe ou votre code QR`) == true ) {
+      console.log("destruction localstorage")
+      localStorage.removeItem('userInfo')
+      window.location.href = 'Accueil'
+    } else {
+      alert("vous avez choisi de ne pas vous déconecter")
+    }
+  }
 
 //rendu
   return (
     <>
-{ location !== 'Accueil' && (
+{ JSON.parse(localStorage.getItem('userInfo')) === null || location !== 'Accueil' && (
     <header className="h-24"><nav className="py-8 px-4 absolute z-50 right-0">
     <a onClick={handleMenu}>
       <i className="fa-solid fa-bars fa-3x menuToggle text-white"></i>
@@ -83,6 +94,11 @@ function App(): JSX.Element {
             {el.name}</a>
         </li>
       ))}
+    <li className ="li--disconnect">
+      <a className="flex-col" onClick={handleDisconnect}>
+      <i className="fa-solid fa-right-to-bracket fa-2x"></i>
+      Déconnexion</a>
+    </li>
     <li className="li--backToGame">
       <a className='flex-col' onClick={handleMenu}>
       <i className="fa-solid fa-reply fa-2x"></i>
@@ -90,13 +106,21 @@ function App(): JSX.Element {
       </a>
       </li>
 </ul></header>)}
+      {/* a voir si on s'assure de pas pouvoir afficher les autres screen sans ID ou si on force redirige si y'a pas d'id */}
+      {/* {JSON.parse(localStorage.getItem('userInfo')) === null && <Accueil />}
+      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === "Accueil" && (<Accueil  />) }
+      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === "HomeScreen" && (<HomeScreen />) }
+      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === "ComposantExample" && (<ComposantExample />) }  
+      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === "Credits" && (<Credits />)}   
+      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === "Notifications" && (<Notifications />)}
+      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === "Gallery" && (<Gallery />)}  */}
+      {JSON.parse(localStorage.getItem('userInfo')) === null && window.history.pushState(location, '', 'Accueil')}
+      {location === 'Accueil' && <Accueil />}
+      {location === 'HomeScreen' && <HomeScreen />}
+      {location === 'Credits' && <Credits />}
+      {location === 'Notifications' && <Notifications />}
+      {location === 'Gallery' && <Gallery />}
 
-      {location === "Accueil" && (<Accueil location={location} setLocation={setLocation} />) }
-      {location === "HomeScreen" && (<HomeScreen />) }
-      {location === "ComposantExample" && (<ComposantExample />) }  
-      {location === "Credits" && (<Credits />)}   
-      {location === "Notifications" && (<Notifications />)}
-      {location === "Gallery" && (<Gallery />)} 
     </>
     
   );

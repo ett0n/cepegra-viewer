@@ -1,6 +1,6 @@
 interface User {
   id: number;
-  attributes: UserAttr;
+  pseudo: string
 }
 
 interface UserAttr {

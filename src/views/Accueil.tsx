@@ -1,21 +1,19 @@
-// @ts-nocheck
 import Axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import Form from '../components/Form'
-import type Appusers from '../types/Appusers'
 
-// interface UserInfo {id: number; pseudo: string;}
+interface UserInfo {id: number; pseudo: string; attributes: {pseudo: string};}
 
-const Accueil: React.FC<props> = () => {
+const Accueil: React.FC = () => {
 
   /* ----------- state ----------- */
   const [user, setUser] = useState<{id: number; pseudo: string;}[]>()
   const [pseudalInput, setPseudalInput] = useState<string>('')
-  const [data, setData] = useState<User>()
+  const [data, setData] = useState<UserInfo>()
 
   const getDatas = async () => {
     const apiDatas = await Axios.get('http://xrlab.cepegra.be:1337/api/appusers?populate=*')
-    const coucou = apiDatas.data.data.map( u  => {return {id: u.id, pseudo : u.attributes.pseudo}})
+    const coucou = apiDatas.data.data.map( (u:UserInfo)  => {return {id: u.id, pseudo : u.attributes.pseudo}})
     setUser(coucou)
     setData(apiDatas.data.data)
   }
@@ -28,7 +26,7 @@ const Accueil: React.FC<props> = () => {
   /* ---------- react ----------- */
   const connect = (ev: React.FormEvent) => {
     ev.preventDefault()
-    const temp = user.filter( el => el.pseudo === pseudalInput)
+    const temp = user!.filter( el => el.pseudo === pseudalInput)
     if (temp.length === 0) { 
       const msg = document.querySelector('#msgUser')
       msg.classList.remove('hidden')
@@ -38,8 +36,8 @@ const Accueil: React.FC<props> = () => {
         msg.classList.remove('msg')
       }, 2000)
     } else if (temp[0].pseudo === pseudalInput ) {
-      sessionStorage.setItem('userInfo', JSON.stringify(temp))
-      window.location = 'HomeScreen'
+      localStorage.setItem('userInfo', JSON.stringify(temp))
+      window.location.href = 'HomeScreen'
     }
     setPseudalInput('')
   }
