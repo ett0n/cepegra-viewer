@@ -106,20 +106,16 @@ function App(): JSX.Element {
       </a>
       </li>
 </ul></header>)}
-      {/* a voir si on s'assure de pas pouvoir afficher les autres screen sans ID ou si on force redirige si y'a pas d'id */}
-      {/* {JSON.parse(localStorage.getItem('userInfo')) === null && <Accueil />}
-      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === "Accueil" && (<Accueil  />) }
-      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === "HomeScreen" && (<HomeScreen />) }
-      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === "ComposantExample" && (<ComposantExample />) }  
-      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === "Credits" && (<Credits />)}   
-      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === "Notifications" && (<Notifications />)}
-      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === "Gallery" && (<Gallery />)}  */}
-      {JSON.parse(localStorage.getItem('userInfo')) === null && window.history.pushState(location, '', 'Accueil')}
+      {
+        JSON.parse(localStorage.getItem('userInfo')) === null 
+          ? window.history.pushState(location, '', 'Accueil') && <Accueil /> 
+          : window.history.pushState(location, '', location) }
+      {JSON.parse(localStorage.getItem('userInfo')) === null && window.history.pushState(location, '', 'Accueil') && location === 'Accueil'}
       {location === 'Accueil' && <Accueil />}
-      {location === 'HomeScreen' && <HomeScreen />}
-      {location === 'Credits' && <Credits />}
-      {location === 'Notifications' && <Notifications />}
-      {location === 'Gallery' && <Gallery />}
+      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'HomeScreen' && <HomeScreen />}
+      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Credits' && <Credits />}
+      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Notifications' && <Notifications />}
+      {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Gallery' && <Gallery />}
 
     </>
     
