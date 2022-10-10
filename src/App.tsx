@@ -14,7 +14,7 @@ import Gallery from "./views/Gallery";
 
 function App(): JSX.Element {
   //state
-  // const userInfo = JSON.parse(localStorage.getItem('userInfo')) as UserInfo
+  const userInfo: string | null = JSON.parse(localStorage.getItem('userInfo'))
   const [location, setLocation] = useState('HomeScreen');
   const pages = ['Accueil', 'HomeScreen', 'Credits', 'Notifications', 'Gallery'];
 
