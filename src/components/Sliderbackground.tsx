@@ -25,10 +25,10 @@ import data from '../data.json';
 
     const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
 
-      // console.log("C clickay");
-      // const url = ev.target.src
-      // console.log(url);
-      // document.body.style.backgroundImage = `url(${url})`
+      console.log("C clickay");
+      const url = ev.target.src
+      console.log(url);
+      document.body.style.backgroundImage = `url(${url})`
     }
 
 

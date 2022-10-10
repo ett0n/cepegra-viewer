@@ -1,8 +1,8 @@
 import React from 'react';
 
 const polarRandom = () => (0.5 - Math.random()) * 2;
-const randomRange = (min, max) => min + (Math.random() * max - min);
-const polarRange = (min, max) => min + (polarRandom() * max - min);
+const randomRange = (min :any, max:any) => min + (Math.random() * max - min);
+const polarRange = (min :any, max:any) => min + (polarRandom() * max - min);
 
 const colors = [
 	'#25282F',
@@ -14,9 +14,9 @@ const colors = [
 	'#CD6961',
 ];
 
-const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const pickRandom = (arr :any) => arr[Math.floor(Math.random() * arr.length)];
 
-const Ball = (props) => {
+const Ball = (props :any) => {
 	return (
 		<mesh {...props}>
 			<sphereBufferGeometry
