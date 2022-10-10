@@ -22,7 +22,7 @@ import data from '../data.json';
 
   try {
     console.log("Ressource en ligne chargée avec succès");
-    const response = await axios.get('https://jsonlaceholder.typicode.com/');    
+    const response = await axios.get('https://jsonplaceholder.typicode.com/');    
   } catch (error) {
     const response = await axios.get('../data.json');
     console.log("MDR on charge le local")

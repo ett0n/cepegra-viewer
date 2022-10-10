@@ -131,3 +131,88 @@ body {
 
 
 
+.menu-open {
+  @apply h-screen z-40 absolute overflow-hidden;
+  &:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url("./assets/background-2d.jpg");
+    // background-size: cover;
+    filter: blur(5px);
+  }
+}
+
+.background-image-blurred {
+  filter: blur(5px);
+}
+
+main {
+  height: calc(100vh - 8rem);
+}
+
+
+body {
+  background-image: url("./assets/background-2d.jpg");
+  background-size: cover;
+  height: 100vh;
+}
+
+.menu-close {
+  display:none;
+}
+
+.li--backToGame {
+  align-self: flex-end;
+  justify-self: center;
+  position: absolute;
+}
+
+i.fa-child-reaching{
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem;
+  &:after {
+  content: "a / r";
+  font-size: 0.6rem;
+  }
+}
+
+.shutter {
+  width: 4rem;
+  border: 3px solid white;
+  height: 4rem;
+  margin: 0 auto;
+  border-radius: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:before {
+    width: 3rem;
+    height: 3rem;
+    background: white;
+    content: " ";
+    border-radius: 42px;
+    display: block;
+    transition: width 0.2s ease-in, height 0.2s ease-in
+  }
+  &:active:before {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+.btn-ar {
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.msg {
+  @apply alert alert-error shadow-lg absolute bottom-[120px] w-2/3 flex;
+  left: calc(50% - 33vw );
+}

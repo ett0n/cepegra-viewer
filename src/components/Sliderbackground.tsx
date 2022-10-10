@@ -16,7 +16,7 @@ import data from '../data.json';
 
   try {
     console.log("Ressource en ligne chargée avec succès");
-    const response = await axios.get('https://jsonlaceholder.typicode.com/');    
+    const response = await axios.get('http://xrlab.cepegra.be:1337/api/appusers?populate=*');    
   } catch (error) {
     const response = await axios.get('../data.json');
     console.log("MDR on charge le local")
@@ -26,7 +26,7 @@ import data from '../data.json';
     const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
 
       console.log("C clickay");
-      const url = ev.target.src
+      const url = ev.currentTarget.getAttribute('src')
       console.log(url);
       document.body.style.backgroundImage = `url(${url})`
     }
