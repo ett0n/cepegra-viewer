@@ -17,6 +17,7 @@
 
   // Data Non-Axios
 import data from '../data.json';
+import dataChar from '../data-char.json'
 
   //AXIOS - OK ça tourne portugesh de mort 
 
@@ -45,16 +46,14 @@ import data from '../data.json';
       <>
       
         <Swiper
-          pagination={{
-            type: "fraction",
-          }}
+          
           navigation={true}
-          modules={[Pagination, Navigation]}
-          className="mySwiper"
+          modules={[Navigation]}
+          className="mySwiper mb-12"
         >
-        {data.resources.map((resource, index) => (
+        {dataChar.resources.map((resource, index) => (
         <SwiperSlide key={index}><a onClick={changeBackground}
-        data-url={resource.imageUrl} className="w-full cursor-pointer"><img src={resource.imageUrl || ''} alt="ffkeofk"></img></a></SwiperSlide>
+        data-url={resource.imageUrl} className="cursor-pointer w-1/2 mx-auto mb-12"><img src={resource.imageUrl || ''} alt="ffkeofk"></img></a></SwiperSlide>
       ))}
         </Swiper>
       </>

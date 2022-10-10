@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -6,6 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import index from "../index.scss";
+import { Pagination, Navigation } from "swiper";
 
 import axios from "axios";
   
@@ -14,19 +16,26 @@ import data from '../data.json';
 
   //AXIOS - OK ça tourne portugesh de mort 
 
-  try {
-    console.log("Ressource en ligne chargée avec succès");
-    const response = await axios.get('http://xrlab.cepegra.be:1337/api/appusers?populate=*');    
-  } catch (error) {
-    const response = await axios.get('../data.json');
-    console.log("MDR on charge le local")
-    console.log(response);
+  // try {
+  //   console.log("Ressource en ligne chargée avec succès");
+  //   const response = await axios.get('http://xrlab.cepegra.be:1337/api/appusers?populate=*');    
+  // } catch (error) {
+  //   const response = await axios.get('../data.json');
+  //   console.log("MDR on charge le local")
+  //   console.log(response);
+  //   }
+    try {
+      const response = await axios.get('./data.json');
+      console.log(response)
+    } catch (error) {
+      console.log(e)
     }
 
     const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
 
       console.log("C clickay");
-      const url = ev.currentTarget.getAttribute('src')
+      console.log(ev)
+      const url = ev.currentTarget.dataset.url
       console.log(url);
       document.body.style.backgroundImage = `url(${url})`
     }
@@ -36,13 +45,16 @@ import data from '../data.json';
 const Sliderbackground = () => {
   return (
     <>
-       <Swiper slidesPerView={3} spaceBetween={30} pagination={{
-  "clickable": true
-  
-}} className="mySwiper">
+       <Swiper 
+       loop={true}
+        
+       navigation={true}
+       modules={[Navigation]}
+       spaceBetween={30} 
+       className="mySwiper">
   {data.resources.map((resource, index) => (
         <SwiperSlide key={index}><a onClick={changeBackground}
-        data-url={resource.imageUrl} className="cursor-pointer"><img src={resource.imageUrl || ''} alt="ffkeofk"></img></a></SwiperSlide>
+        data-url={resource.imageUrl} className="cursor-pointer w-screen mx-auto w-2/3"><img src={resource.imageUrl || ''} alt="ffkeofk"></img></a></SwiperSlide>
       ))}
         </Swiper>
     </>

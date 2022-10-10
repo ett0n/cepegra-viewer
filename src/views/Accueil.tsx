@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import Form from '../components/Form'
@@ -12,8 +13,43 @@ const Accueil: React.FC = () => {
   const [data, setData] = useState<UserInfo>()
 
   const getDatas = async () => {
-    const apiDatas = await Axios.get('http://xrlab.cepegra.be:1337/api/appusers?populate=*')
-    const coucou = apiDatas.data.data.map( (u:UserInfo)  => {return {id: u.id, pseudo : u.attributes.pseudo}})
+    // const apiDatas = await Axios.get('http://xrlab.cepegra.be:1337/api/appusers?populate=*')
+    // const coucou = apiDatas.data.data.map( (u:UserInfo)  => {return {id: u.id, pseudo : u.attributes.pseudo}})
+    const tempApi = {
+      "data": [
+        {
+          "id": 1,
+          "attributes": {
+            "email": "mail@mail.com",
+            "pseudo": "User1",
+            "disabled": false,
+            "createdAt": "2022-10-05T07:52:22.461Z",
+            "updatedAt": "2022-10-05T07:57:01.507Z",
+            "publishedAt": "2022-10-05T07:56:05.243Z"
+          }
+        },
+        {
+          "id": 2,
+          "attributes": {
+            "email": "mail2@mail2.com",
+            "pseudo": "User2",
+            "disabled": false,
+            "createdAt": "2022-10-05T14:10:11.757Z",
+            "updatedAt": "2022-10-05T14:13:35.087Z",
+            "publishedAt": "2022-10-05T14:13:35.085Z"
+          }
+        }
+      ],
+      "meta": {
+        "pagination": {
+          "page": 1,
+          "pageSize": 25,
+          "pageCount": 1,
+          "total": 2
+        }
+      }
+    }
+    const coucou = tempApi.data.map( (u:UserInfo)  => {return {id: u.id, pseudo : u.attributes.pseudo}})
     setUser(coucou)
     setData(apiDatas.data.data)
   }

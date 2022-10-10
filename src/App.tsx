@@ -19,6 +19,7 @@ import HomeScreen from './views/HomeScreen'
 import Credits from "./views/Credits";
 import Notifications from "./views/Notifications";
 import Gallery from "./views/Gallery";
+import Customizer from "./views/Customizer"
 
 interface UserInfo {id: number; pseudo: string;}
 
@@ -27,7 +28,7 @@ function App(): JSX.Element {
   //state
   const userInfo= JSON.parse(localStorage.getItem('userInfo'))
   const [location, setLocation] = useState('HomeScreen');
-  const pages = ['Accueil', 'HomeScreen', 'Credits', 'Notifications', 'Gallery', 'Sliderpersonnage' , 'Sliderbackground'];
+  const pages = ['Accueil', 'HomeScreen', 'Credits', 'Notifications', 'Gallery', 'Sliderpersonnage' , 'Sliderbackground', 'Customizer'];
 
   const menuPages = [
     {name: 'Accueil', class: 'fa-home'},
@@ -36,7 +37,8 @@ function App(): JSX.Element {
     {name: 'Gallery', class: 'fa-film'},
     {name: 'Credits', class: 'fa-laptop-code'},
     {name: 'Sliderpersonnage', class: 'fa-laptop-code'},
-    {name: 'Sliderbackground', class: 'fa-laptop-code'}
+    {name: 'Sliderbackground', class: 'fa-laptop-code'},
+    {name: 'Customizer', class: 'fa-laptop-code'}
   ]
 
   useEffect( () => {
@@ -130,8 +132,9 @@ function App(): JSX.Element {
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Credits' && <Credits />}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Notifications' && <Notifications />}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Gallery' && <Gallery />}
-        {location === 'Sliderbackground' && <Sliderbackgroundound />}
-        {location === 'Sliderpersonnage' && <Sliderpersonnage />}
+        {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Customizer' && <Customizer />}
+        {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Sliderbackground' && <Sliderbackground />}
+        {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Sliderpersonnage' && <Sliderpersonnage />}
 
         
 </main>)
