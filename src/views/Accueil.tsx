@@ -99,7 +99,6 @@ const Accueil: React.FC = () => {
 <div className="flex flex-col w-full border-opacity-50">
   <div className="divider">Se connecter</div>
 </div>
-      <Form handleClick={handleClick} />
       <form className="flex flex-col" onSubmit={connect}>
         <div className="flex">
           <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={handleChange} value={pseudalInput} />

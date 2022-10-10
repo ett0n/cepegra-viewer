@@ -45,18 +45,19 @@ import data from '../data.json';
 const Sliderbackground = () => {
   return (
     <>
-       <Swiper 
-       loop={true}
-        
-       navigation={true}
-       modules={[Navigation]}
-       spaceBetween={30} 
-       className="mySwiper">
-  {data.resources.map((resource, index) => (
-        <SwiperSlide key={index}><a onClick={changeBackground}
-        data-url={resource.imageUrl} className="cursor-pointer w-screen mx-auto w-2/3"><img src={resource.imageUrl || ''} alt="ffkeofk"></img></a></SwiperSlide>
-      ))}
-        </Swiper>
+       <div className='h-1/3'>
+         <Swiper
+         loop={true}
+         navigation={true}
+         modules={[Navigation]}
+         spaceBetween={30}
+         className="mySwiper flex flex-col justify-center">
+           {data.resources.map((resource, index) => (
+          <SwiperSlide key={index}><a onClick={changeBackground}
+          data-url={resource.imageUrl} className="cursor-pointer mx-auto h-36"><img src={resource.imageUrl || ''} alt="ffkeofk"></img></a></SwiperSlide>
+               ))}
+          </Swiper>
+       </div>
     </>
   )
 }

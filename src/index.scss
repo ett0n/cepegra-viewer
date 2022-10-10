@@ -147,7 +147,10 @@ body {
 }
 
 main {
-  height: calc(100vh - 8rem);
+  height: calc(100vh - 6rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 

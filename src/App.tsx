@@ -1,19 +1,13 @@
 // @ts-nocheck
-
-import Sliderpersonnage from "./components/Sliderpersonnage";
-import Sliderbackground from "./components/Sliderbackground";
-import ArPersoOK from "./components/ArPersoOK";
-import BallPit from "./components/BallPit";
+/* ----------------------------------- Import ----------------------------------- */
+// Import Dependancies
 import ReactDOM from 'react-dom';
-
-
+import { useEffect, useState } from "react";
 import { Canvas } from '@react-three/fiber'
 import { useGLTF, Box } from '@react-three/drei'
 import { VRButton, ARButton, XR, Controllers, Hands, useHitTest } from '@react-three/xr'
 
-import { useEffect, useState } from "react";
-import "aframe";
-import ComposantExample from './components/ComposantExample'
+// Import views
 import Accueil from './views/Accueil'
 import HomeScreen from './views/HomeScreen'
 import Credits from "./views/Credits";
@@ -21,14 +15,16 @@ import Notifications from "./views/Notifications";
 import Gallery from "./views/Gallery";
 import Customizer from "./views/Customizer"
 
+/* --------------------------------- Interaces --------------------------------- */
 interface UserInfo {id: number; pseudo: string;}
 
 
+/* -------------------------------- Application -------------------------------- */
 function App(): JSX.Element {
   //state
   const userInfo= JSON.parse(localStorage.getItem('userInfo'))
   const [location, setLocation] = useState('HomeScreen');
-  const pages = ['Accueil', 'HomeScreen', 'Credits', 'Notifications', 'Gallery', 'Sliderpersonnage' , 'Sliderbackground', 'Customizer'];
+  const pages = ['Accueil', 'HomeScreen', 'Credits', 'Notifications', 'Gallery', 'Customizer'];
 
   const menuPages = [
     {name: 'Accueil', class: 'fa-home'},
@@ -36,9 +32,7 @@ function App(): JSX.Element {
     {name: 'Notifications', class: 'fa-envelope'},
     {name: 'Gallery', class: 'fa-film'},
     {name: 'Credits', class: 'fa-laptop-code'},
-    {name: 'Sliderpersonnage', class: 'fa-laptop-code'},
-    {name: 'Sliderbackground', class: 'fa-laptop-code'},
-    {name: 'Customizer', class: 'fa-laptop-code'}
+    {name: 'Customizer', class: 'fa-wand-magic-sparkles'}
   ]
 
   useEffect( () => {
@@ -90,7 +84,7 @@ function App(): JSX.Element {
 //rendu
   return (
 
-<main>
+<>
   { JSON.parse(localStorage.getItem('userInfo')) === null || location !== 'Accueil' &&
       (<header className="h-24"><nav className="py-8 px-4 absolute z-50 right-0">
       <a onClick={handleMenu}>
@@ -133,11 +127,8 @@ function App(): JSX.Element {
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Notifications' && <Notifications />}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Gallery' && <Gallery />}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Customizer' && <Customizer />}
-        {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Sliderbackground' && <Sliderbackground />}
-        {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Sliderpersonnage' && <Sliderpersonnage />}
-
         
-</main>)
+</>)
 
 }
 

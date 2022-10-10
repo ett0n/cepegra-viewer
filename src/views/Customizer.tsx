@@ -8,11 +8,11 @@ const Customizer = () => {
 
 // rendu
 return (
-  <section>
+  <main>
     <Sliderpersonnage />
     <Sliderbackground />
     
-  </section>
+  </main>
 )
 
 }

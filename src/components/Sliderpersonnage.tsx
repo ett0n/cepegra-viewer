@@ -43,20 +43,20 @@ import dataChar from '../data-char.json'
 
     
     return (
-      <>
+      <section className="border-2 border-red-700 h-2/3">
       
         <Swiper
           
           navigation={true}
           modules={[Navigation]}
-          className="mySwiper mb-12"
+          className="mySwiper my-auto h-full"
         >
         {dataChar.resources.map((resource, index) => (
         <SwiperSlide key={index}><a onClick={changeBackground}
-        data-url={resource.imageUrl} className="cursor-pointer w-1/2 mx-auto mb-12"><img src={resource.imageUrl || ''} alt="ffkeofk"></img></a></SwiperSlide>
+        data-url={resource.imageUrl} className="cursor-pointer w-2/3 mx-auto mb-12"><img src={resource.imageUrl || ''} alt="ffkeofk"></img></a></SwiperSlide>
       ))}
         </Swiper>
-      </>
+      </section>
     );
   }
 

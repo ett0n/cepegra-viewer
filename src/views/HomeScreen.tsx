@@ -1,6 +1,3 @@
-// @ts-nocheck
-
-
 const HomeScreen = () => {
   //state
   const userInfo = JSON.parse(localStorage.getItem('userInfo')!)
@@ -16,7 +13,7 @@ const HomeScreen = () => {
           (<p>Bonjour {userInfo[0].pseudo}, comment ça va bien ? </p>)
         }
       </section>
-      <section className="absolute w-screen bottom-8 flex flex-col gap-8">
+      <section className="w-screen bottom-8 flex flex-col gap-8 h-1/3">
         <a className="shutter"></a>
         <button className="btn btn-ar"><i className="fa-solid fa-child-reaching"></i> Jouons</button></section>
     </main>
