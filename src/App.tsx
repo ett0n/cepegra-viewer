@@ -14,8 +14,6 @@ import Credits from "./views/Credits";
 import Notifications from "./views/Notifications";
 import Gallery from "./views/Gallery";
 import Customizer from "./views/Customizer"
-import Page404 from './views/page404';
-
 
 /* --------------------------------- Interaces --------------------------------- */
 interface UserInfo {id: number; pseudo: string;}
@@ -88,7 +86,7 @@ function App(): JSX.Element {
 /* ----------- rendu ----------- */
   return (<>
   { (JSON.parse(localStorage.getItem('userInfo')) === null || location !== 'Accueil') &&
-  // si userInfo n'est pas dans le localStorage ou si la location est différente de Accueil, alors on affiche le menu
+  // si userInfo n'est pas dans le localStorage ou si la location est différente de Accueil, alors on affiche le menu. Attention l'effet de blur du menu est appliqué dans le css sur le fond d'écran par défaut, il faut le rendre dynamique
       (<header className="h-24">
         <nav className="py-8 px-4 absolute z-50 right-0">
           <a onClick={handleMenu}>
@@ -139,7 +137,5 @@ function App(): JSX.Element {
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Gallery' && <Gallery />}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Customizer' && <Customizer />} 
 </>)
-
 }
-
 export default App;
