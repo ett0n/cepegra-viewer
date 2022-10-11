@@ -22,7 +22,6 @@ import dataChar from '../data-char.json'
   //AXIOS - OK ça tourne portugesh de mort 
 
   try {
-    console.log("Ressource en ligne chargée avec succès");
     const response = await axios.get('https://jsonplaceholder.typicode.com/');    
   } catch (error) {
     const response = await axios.get('../data.json');
@@ -31,10 +30,7 @@ import dataChar from '../data-char.json'
     }
 
     const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
-
-      console.log("C clickay");
       const url = ev.target
-      console.log(url);
       document.body.style.backgroundImage = `url(${url})`
     }
     

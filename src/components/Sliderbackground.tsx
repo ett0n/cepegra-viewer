@@ -26,17 +26,12 @@ import data from '../data.json';
   //   }
     try {
       const response = await axios.get('./data.json');
-      console.log(response)
     } catch (error) {
       console.log(e)
     }
 
     const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
-
-      console.log("C clickay");
-      console.log(ev)
       const url = ev.currentTarget.dataset.url
-      console.log(url);
       document.body.style.backgroundImage = `url(${url})`
     }
 

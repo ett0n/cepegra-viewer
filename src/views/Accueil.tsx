@@ -1,69 +1,37 @@
 // @ts-nocheck
+/* ----------------------------------- Import ----------------------------------- */
 import Axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import Form from '../components/Form'
 
+/* --------------------------------- Interfaces --------------------------------- */
 interface UserInfo {id: number; pseudo: string; attributes: {pseudo: string};}
 
+/* ------------------------------------ App ------------------------------------ */
 const Accueil: React.FC = () => {
 
   /* ----------- state ----------- */
   const [user, setUser] = useState<{id: number; pseudo: string;}[]>()
-  const [pseudalInput, setPseudalInput] = useState<string>('')
+  const [pseudalInput, setPseudalInput] = useState<string>('') // on référence le champ du formulaire
   const [data, setData] = useState<UserInfo>()
 
+  // on défini le call API à effectuer au submit. Ce call est effectué sur le pseudo rentré dans le champ formulaire
   const getDatas = async () => {
-    // const apiDatas = await Axios.get('http://xrlab.cepegra.be:1337/api/appusers?populate=*')
-    // const coucou = apiDatas.data.data.map( (u:UserInfo)  => {return {id: u.id, pseudo : u.attributes.pseudo}})
-    const tempApi = {
-      "data": [
-        {
-          "id": 1,
-          "attributes": {
-            "email": "mail@mail.com",
-            "pseudo": "User1",
-            "disabled": false,
-            "createdAt": "2022-10-05T07:52:22.461Z",
-            "updatedAt": "2022-10-05T07:57:01.507Z",
-            "publishedAt": "2022-10-05T07:56:05.243Z"
-          }
-        },
-        {
-          "id": 2,
-          "attributes": {
-            "email": "mail2@mail2.com",
-            "pseudo": "User2",
-            "disabled": false,
-            "createdAt": "2022-10-05T14:10:11.757Z",
-            "updatedAt": "2022-10-05T14:13:35.087Z",
-            "publishedAt": "2022-10-05T14:13:35.085Z"
-          }
-        }
-      ],
-      "meta": {
-        "pagination": {
-          "page": 1,
-          "pageSize": 25,
-          "pageCount": 1,
-          "total": 2
-        }
-      }
-    }
-    const coucou = tempApi.data.map( (u:UserInfo)  => {return {id: u.id, pseudo : u.attributes.pseudo}})
-    setUser(coucou)
-    setData(apiDatas.data.data)
+    const apiDatas =  await Axios.get(`http://xrlab.cepegra.be:1337/api/appusers?filters[pseudo][$eqi]=${pseudalInput}`)
+    setData(apiDatas)
+    // on crée un tableau qui comporte id et pseudo et on le stock dans user
+    const tempUser = apiDatas.data.data.map( (u:UserInfo) => { return {id: u.id, pseudo: u.attributes.pseudo}})
+    setUser(tempUser)
   }
-  useEffect( () => {
-    getDatas()
-  }, [])
 
 
 
   /* ---------- react ----------- */
-  const connect = (ev: React.FormEvent) => {
+  const handleSubmit = (ev: React.FormEvent) => {
     ev.preventDefault()
-    const temp = user!.filter( el => el.pseudo === pseudalInput)
-    if (temp.length === 0) { 
+    getDatas()
+    const result = data.data.meta.pagination.total // on stock le total de user correspondant au call
+    if(result !== 1) {
+      // Si result n'est pas égal à un, on affiche un message d'erreur qui disparait après 2s
       const msg = document.querySelector('#msgUser')
       msg.classList.remove('hidden')
       msg.classList.add('msg')
@@ -71,49 +39,45 @@ const Accueil: React.FC = () => {
         msg.classList.add('hidden')
         msg.classList.remove('msg')
       }, 2000)
-    } else if (temp[0].pseudo === pseudalInput ) {
-      localStorage.setItem('userInfo', JSON.stringify(temp))
-      window.location.href = 'HomeScreen'
+    } else if (result === 1){
+      // si result = 1 alors on on stocke le tableau user en localStorage et on redirige sur HomeScreen
+      localStorage.setItem('userInfo', JSON.stringify(user)) 
+      window.location.href = 'HomeScreen' 
     }
     setPseudalInput('')
   }
 
-  const handleClick = () => {
-    console.log('handleClick')
-  }
-
   const handleChange = (ev: any) => {
+    // update du contenu du pseudalInput dans le state
     setPseudalInput(ev.target.value)
   }
 
 
   /* ---------- render ---------- */
     return (
-    <section className="flex flex-col justify-between h-screen">
+    <main className="flex flex-col justify-between h-screen">
       <button className="btn btn-block py-2 rounded-none btn-primary"><i className="fa-sharp fa-solid fa-download px-4"></i> Installer l'application</button>
       <h1 className="text-2xl font-bold text-center">je suis un logoooo lol</h1>
-    <section className="flex flex-col my-0 mx-auto w-4/5">
-      <button className="btn my-4">Scanner QR Code</button>
-      
-
-<div className="flex flex-col w-full border-opacity-50">
-  <div className="divider">Se connecter</div>
-</div>
-      <form className="flex flex-col" onSubmit={connect}>
-        <div className="flex">
-          <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={handleChange} value={pseudalInput} />
-          <button className="btn" role="submit" >
-            <i className="fa-solid fa-chevron-right"></i>
-          </button>
+      <section className="flex flex-col my-0 mx-auto w-4/5">
+        <button className="btn my-4">Scanner QR Code</button> {/* non fonctionnel pour le moment*/}
+        <div className="flex flex-col w-full border-opacity-50">
+          <div className="divider">Se connecter</div>
         </div>
-        <div className='hidden' id="msgUser"><div><i className="fa-lg fa-solid fa-triangle-exclamation"></i><span>Erreur de pseudo</span></div></div>
-      </form>
-    </section>
-    <footer className="flex justify-around py-6">
-      <img src="./assets/logo-cepegra.png" alt="Logo du Cepegra" width="50" className="w-3/12"/>
-      <img src="./assets/logo-forem.png" alt="Logo du Forem" className="w-3/12"/>
-    </footer>
-    </section>
+        <form className="flex flex-col" onSubmit={handleSubmit}>
+          <div className="flex">
+            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={handleChange} value={pseudalInput} />
+            <button className="btn" role="submit" >
+              <i className="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+          <div className='hidden' id="msgUser"><div><i className="fa-lg fa-solid fa-triangle-exclamation"></i><span>Erreur de pseudo</span></div></div>
+        </form>
+      </section>
+      <footer className="flex justify-around py-6">
+        <img src="./assets/logo-cepegra.png" alt="Logo du Cepegra" width="50" className="w-3/12"/>
+        <img src="./assets/logo-forem.png" alt="Logo du Forem" className="w-3/12"/>
+      </footer>
+    </main>
   )
 }
 
