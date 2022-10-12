@@ -17,7 +17,9 @@
     "react-dom": "^18.2.0",
     "react-swipeable": "^7.0.0",
     "sass": "^1.55.0",
-    "swiper": "^8.4.2"
+    "swiper": "^8.4.2",    
+    "@react-three/fiber": "^8.8.8",
+    "three": "^0.145.0"
   },
   "devDependencies": {
     "@types/node": "^18.8.2",
