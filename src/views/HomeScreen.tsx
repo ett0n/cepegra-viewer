@@ -14,14 +14,7 @@ const HomeScreen = () => {
   return (
     <main>
       <section className="border-2 border-red-700 h-2/3">
-        {userInfo !== null && (
-          <Canvas>
-            <ambientLight intensity={0.4} />
-            <pointLight intensity={.6} position={[0, 3, 3]}/>
-            <OrbitControls target={[0, 2, 0]} maxPolarAngle={1.45} enablePan={false} enableZoom={false}/>
-            <Hero idUser={userInfo.id}/>
-          </Canvas>
-        )}
+        {userInfo !== null && <Hero idUser={userInfo.id} indexCharacter={-1}/>}
       </section>
       <section className="w-screen bottom-8 flex flex-col gap-8 h-1/3">
         <a className="shutter"></a>

@@ -1,15 +1,32 @@
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, OrbitControls } from "@react-three/drei";
 import axios from "axios";
-import { useEffect, useMemo, useState, Suspense, AnchorHTMLAttributes } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  Suspense,
+  AnchorHTMLAttributes,
+} from "react";
 import type { Anchors } from "../types/Anchors";
-import type { Accessories, Character, AccessoriesStr } from "../types/Character";
+import type {
+  Accessories,
+  Character,
+  AccessoriesStr,
+} from "../types/Character";
+import { Canvas } from "@react-three/fiber";
 
-export const Hero = ({idUser}:{idUser:number}) => {
+export const Hero = ({
+  idUser,
+  indexCharacter,
+}: {
+  idUser: number;
+  indexCharacter: number;
+}) => {
   //defining
   const anc: Anchors = {
     hats: [0, 3.43, -0.03],
     heads: [0, 3.1, -0.54],
-    costumes: [0, 0.6, 0],
+    bodies: [0, 0.6, 0],
     hand_l: [-1.2, 2, 0],
     foot_l: [-0.34, 0.3, -0.02],
     foot_r: [0.34, 0.3, -0.02],
@@ -22,15 +39,21 @@ export const Hero = ({idUser}:{idUser:number}) => {
   const [getAccessories, setAccessories] = useState<AccessoriesStr>({
     hat: "/assets/accessories/hats/sphere-1/sphere-1.glb",
     head: "/assets/accessories/heads/glasses-1/glasses-1.glb",
-    body: "/assets/accessories/costumes/rectangle-1/rectangle-1.glb",
+    body: "/assets/accessories/bodies/rectangle-1/rectangle-1.glb",
     hand_l: "/assets/accessories/hands/hammer-1/hammer-1.glb",
     hand_r: "/assets/accessories/hands/hammer-1/hammer-1.glb",
     feet: "/assets/accessories/feet/sneakers-1/sneakers-1.glb",
   });
 
   //component using gltf source from state
-  const Accessory = ({ src, clone }: { src: string | null; clone?: boolean }) => {
-    if (src === null) return <div></div>;
+  const Accessory = ({
+    src,
+    clone,
+  }: {
+    src: string | null;
+    clone?: boolean;
+  }) => {
+    if (src === null) return null;
     const gltf = useGLTF(src, true);
     if (clone) {
       return (
@@ -45,14 +68,16 @@ export const Hero = ({idUser}:{idUser:number}) => {
         </Suspense>
       );
     }
-  }
+  };
   //pushing every chracter from API result in an array[] of Characters
   let characters: Character[] = [];
 
   // CALL API
   const FetchCharacterApi = async (idUser: number) => {
     await axios
-      .get(`http://xrlab.cepegra.be:1337/api/appusers/${idUser}?populate[characters][populate][accessories][populate]=*`)
+      .get(
+        `http://api.xrlab.cepegra.be/api/appusers/${idUser}?populate[characters][populate][accessories][populate]=*`
+      )
       //if API down
       .catch((error: string) => {
         console.log("apidown or wrong id", error);
@@ -63,7 +88,10 @@ export const Hero = ({idUser}:{idUser:number}) => {
         characterResponse.forEach((element: Character) => {
           characters.push(element);
         });
-        let charNumber = characterResponse.length-1;
+        let charNumber =
+          indexCharacter == -1 ? characterResponse.length - 1 : indexCharacter;
+
+        console.log(`Chargement du chara [${charNumber}]`);
         //character[x].accessory_name
         let accessories = {
           hatN: characters[charNumber].attributes.accessories.hat.name,
@@ -76,48 +104,82 @@ export const Hero = ({idUser}:{idUser:number}) => {
         console.log(accessories);
         //refreshing accessory state with API accessories
         setAccessories({
-          hat: accessories.hatN !== null ? `/assets/accessories/hats/${accessories.hatN}/${accessories.hatN}.glb` : null,
-          head: accessories.headN !== null ? `/assets/accessories/heads/${accessories.headN}/${accessories.headN}.glb` : null,
-          body: accessories.bodyN !== null ? `/assets/accessories/costumes/${accessories.bodyN}/${accessories.bodyN}.glb` : null,
-          hand_l: accessories.hand_lN !== null ? `/assets/accessories/hands/${accessories.hand_lN}/${accessories.hand_lN}.glb` : null,
-          hand_r: accessories.hand_rN !== null ? `/assets/accessories/hands/${accessories.hand_rN}/${accessories.hand_rN}.glb` : null,
-          feet: accessories.feet !== null ? `/assets/accessories/feet/${accessories.feet}/${accessories.feet}.glb` : null,
+          hat:
+            accessories.hatN !== null
+              ? `/assets/accessories/hats/${accessories.hatN}/${accessories.hatN}.glb`
+              : null,
+          head:
+            accessories.headN !== null
+              ? `/assets/accessories/heads/${accessories.headN}/${accessories.headN}.glb`
+              : null,
+          body:
+            accessories.bodyN !== null
+              ? `/assets/accessories/bodies/${accessories.bodyN}/${accessories.bodyN}.glb`
+              : null,
+          hand_l:
+            accessories.hand_lN !== null
+              ? `/assets/accessories/hands/${accessories.hand_lN}/${accessories.hand_lN}.glb`
+              : null,
+          hand_r:
+            accessories.hand_rN !== null
+              ? `/assets/accessories/hands/${accessories.hand_rN}/${accessories.hand_rN}.glb`
+              : null,
+          feet:
+            accessories.feet !== null
+              ? `/assets/accessories/feet/${accessories.feet}/${accessories.feet}.glb`
+              : null,
         });
       });
-  }
+  };
 
   // Fetch de personnage de l'api
   useEffect(() => {
     FetchCharacterApi(idUser);
-  }, []);
+  }, [indexCharacter]);
 
   const sX = 0.3;
 
   return (
     <>
-      <primitive object={character.scene}>
-        <mesh position={anc.hats} scale={2}>
-          <Accessory src={getAccessories.hat} />
-        </mesh>
-        <mesh position={anc.heads} scale={0.1}>
-          <Accessory src={getAccessories.head} />
-        </mesh>
-        <mesh position={anc.costumes} scale={0.4}>
-          <Accessory src={getAccessories.body} />
-        </mesh>
-        <mesh position={anc.hand_l} scale={0.001} rotation={[2, 0, 0]}>
-          <Accessory src={getAccessories.hand_l} />
-        </mesh>
-        <mesh position={anc.hand_r} scale={0.001} rotation={[2, 0, 0]}>
-          <Accessory src={getAccessories.hand_r} clone={true} />
-        </mesh>
-        <mesh position={anc.foot_l} scale={[sX, sX, sX]} rotation={[0, 0, 0]}>
-          <Accessory src={getAccessories.feet} />
-        </mesh>
-        <mesh position={anc.foot_r} scale={[-sX, sX, sX]} rotation={[0, 0, 0]}>
-          <Accessory src={getAccessories.feet} clone={true} />
-        </mesh>
-      </primitive>
+      {/* Canvas accueillant le personnage en 3D */}
+      <p>{indexCharacter}</p>
+      <Canvas>
+        <ambientLight intensity={0.4} />
+        <pointLight intensity={0.6} position={[0, 3, 3]} />
+        <OrbitControls
+          target={[0, 2, 0]}
+          maxPolarAngle={1.45}
+          enablePan={false}
+          enableZoom={false}
+        />
+        <primitive object={character.scene}>
+          <mesh position={anc.hats} scale={2}>
+            <Accessory src={getAccessories.hat} />
+          </mesh>
+          <mesh position={anc.heads} scale={0.1}>
+            <Accessory src={getAccessories.head} />
+          </mesh>
+          <mesh position={anc.bodies} scale={0.4}>
+            <Accessory src={getAccessories.body} />
+          </mesh>
+          <mesh position={anc.hand_l} scale={0.001} rotation={[2, 0, 0]}>
+            <Accessory src={getAccessories.hand_l} />
+          </mesh>
+          <mesh position={anc.hand_r} scale={0.001} rotation={[2, 0, 0]}>
+            <Accessory src={getAccessories.hand_r} clone={true} />
+          </mesh>
+          <mesh position={anc.foot_l} scale={[sX, sX, sX]} rotation={[0, 0, 0]}>
+            <Accessory src={getAccessories.feet} />
+          </mesh>
+          <mesh
+            position={anc.foot_r}
+            scale={[-sX, sX, sX]}
+            rotation={[0, 0, 0]}
+          >
+            <Accessory src={getAccessories.feet} clone={true} />
+          </mesh>
+        </primitive>
+      </Canvas>
     </>
   );
 };
