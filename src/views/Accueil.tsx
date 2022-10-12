@@ -23,9 +23,9 @@ const Accueil = () => {
   // on défini le call API à effectuer au submit. Ce call est effectué sur le pseudo rentré dans le champ formulaire
   const ApiFetchDatas = async () => {
     try {
-      const apiDatas = await Axios.get(`http://xrlab.cepegra.be:1337/api/appusers?filters[pseudo][$eqi]=${pseudalInput}`);
+      const apiDatas = await Axios.get(`https://api.xrlab.cepegra.be/api/appusers?filters[pseudo][$eqi]=${pseudalInput}`);
       //met un utilisateur avec un pseudonyme unique de sorte a différencier le onmount et quand l'utilisateur n'existe pas
-      if (apiDatas.data.data.length === 0) setUser({ id: 0, pseudo: "8231e932-dbc1-4bca-9943-a506cd676095" });
+      if (apiDatas.data.data.length === 0) setUser({ id: -1, pseudo: "" });
       else setUser({ id: apiDatas.data.data[0].id, pseudo: apiDatas.data.data[0].attributes.pseudo });
       // on crée un tableau qui comporte id et pseudo et on le stock dans user
     } catch (error) {
@@ -44,7 +44,7 @@ const Accueil = () => {
   const LocalStorageValue = () => {
     //erreur -> user n'existe pas
     if (getUser !== undefined) {
-      if (getUser.pseudo === "8231e932-dbc1-4bca-9943-a506cd676095") {
+      if (getUser.id === -1) {
         // Si result n'est pas égal à un, on affiche un message d'erreur qui disparait après 2s
         const msg = document.querySelector("#msgUser")!;
         msg.classList.remove("hidden");
@@ -63,7 +63,7 @@ const Accueil = () => {
   };
 
   //s'execute lorsque l'input change de valeur
-  const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+  const HandleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     // update du contenu du pseudalInput dans le state
     setPseudalInput(ev.target.value);
   };
@@ -82,7 +82,7 @@ const Accueil = () => {
         </div>
         <form className="flex flex-col" onSubmit={HandleSubmit}>
           <div className="flex">
-            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={handleChange} value={pseudalInput} />
+            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={HandleChange} value={pseudalInput} />
             <button className="btn" role="submit">
               <i className="fa-solid fa-chevron-right"></i>
             </button>
