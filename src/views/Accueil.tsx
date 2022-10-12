@@ -16,7 +16,6 @@ const Accueil = () => {
   const [pseudalInput, setPseudalInput] = useState<string>(""); // on référence le champ du formulaire
 
   useEffect(() => {
-    console.log("je fredjhs");
     if (getUser !== undefined) LocalStorageValue();
   }, [getUser]);
 
