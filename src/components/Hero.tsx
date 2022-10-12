@@ -88,8 +88,7 @@ export const Hero = ({
         characterResponse.forEach((element: Character) => {
           characters.push(element);
         });
-        let charNumber =
-          indexCharacter == -1 ? characterResponse.length - 1 : indexCharacter;
+        let charNumber = indexCharacter == -1 ? characterResponse.length - 1 : indexCharacter;
 
         console.log(`Chargement du chara [${charNumber}]`);
         //character[x].accessory_name
@@ -142,7 +141,6 @@ export const Hero = ({
   return (
     <>
       {/* Canvas accueillant le personnage en 3D */}
-      <p>{indexCharacter}</p>
       <Canvas>
         <ambientLight intensity={0.4} />
         <pointLight intensity={0.6} position={[0, 3, 3]} />
@@ -151,6 +149,7 @@ export const Hero = ({
           maxPolarAngle={1.45}
           enablePan={false}
           enableZoom={false}
+          enableRotate={indexCharacter === -1 ? true : false}
         />
         <primitive object={character.scene}>
           <mesh position={anc.hats} scale={2}>

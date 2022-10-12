@@ -21,47 +21,46 @@ import { Hero } from "./Hero";
 import { userInfo } from "os";
 
 const Sliderpersonnage = () => {
-  // INIT
+  /* ---- INIT ---- */
   const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
-  const [getCharacters, setCharacters] = useState<Object[]>([])
+  const [getAmountCharacters, setAmountCharacters] = useState(0)
+  const [getIndexCharacter, setIndexCharacter] = useState(0)
 
-  // REACTION
+  /* ---- REACT ---- */
+  // Récupération du nombre de personnage de l'utilisateur
   const FetchCharacterApi = async () => {
-    await axios
-      .get(
-        `http://api.xrlab.cepegra.be/api/appusers/${userInfo.id}?populate[characters][populate][accessories][populate]=*`
-      )
-      //if API down
-      .catch((error: string) => {
-        console.log("apidown or wrong id", error);
-      })
-      .then((response: any) => {
-        setCharacters(response.data.data.attributes.characters.data)
-      });
+    await axios.get(`http://api.xrlab.cepegra.be/api/appusers/${userInfo.id}?populate[characters][populate][accessories][populate]=*`)
+      .catch((error: string) => console.log("apidown or wrong id", error))
+      .then((response: any) => setAmountCharacters(response.data.data.attributes.characters.data.length));
   };
 
+  // FetchCharacterApi seulement au chargement du composant
   useEffect(() => {
     FetchCharacterApi()
   }, [])
 
-  const [getIndexCharacter, setIndexCharacter] = useState(0)
+  // change l'index du character à afficher
+  const SelectIndexCharacter = (selection:string) => {
+    if (selection === "next") {
+      if(getIndexCharacter < getAmountCharacters - 1) {
+        setIndexCharacter(getIndexCharacter + 1)
+      }
+    }
+    if (selection === "previous") {
+      if(getIndexCharacter > 0) {
+        setIndexCharacter(getIndexCharacter - 1)
+      }
+    }
+  }
 
-  // RENDER
+  /* ---- RENDER ---- */
   return (
     <section className="border-2 border-red-700 h-2/3">
-      <Swiper
-        navigation={true}
-        modules={[Navigation]}
-        className="mySwiper my-auto h-full"
-      >
-        {/* {getCharacters.map((resource, index) => ( */}
-          <SwiperSlide>
-            <button style={{backgroundColor: "red"}} onClick={() => setIndexCharacter(getIndexCharacter-1)}>-</button>
-            <Hero idUser={userInfo.id} indexCharacter={getIndexCharacter} />
-            <button style={{backgroundColor: "red"}} onClick={() => setIndexCharacter(getIndexCharacter+1)}>+</button>
-          </SwiperSlide>
-        {/* ))} */}
-      </Swiper>
+      
+      <button style={{backgroundColor: "red", width: "2rem", borderRadius: "5px", margin: "1rem"}} onClick={() => SelectIndexCharacter("previous")}>&lt;</button>
+      <button style={{backgroundColor: "red", width: "2rem", borderRadius: "5px", margin: "1rem"}} onClick={() => SelectIndexCharacter("next")}>&gt;</button>
+      <Hero idUser={userInfo.id} indexCharacter={getIndexCharacter} />
+
     </section>
   );
 };
