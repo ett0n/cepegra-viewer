@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState, Suspense, AnchorHTMLAttributes } from "re
 import type { Anchors } from "../types/Anchors";
 import type { Accessories, Character, AccessoriesStr } from "../types/Character";
 
-export const Hero = () => {
+export const Hero = ({idUser}:{idUser:number}) => {
   //defining
   const anc: Anchors = {
     hats: [0, 3.43, -0.03],
@@ -63,7 +63,7 @@ export const Hero = () => {
         characterResponse.forEach((element: Character) => {
           characters.push(element);
         });
-        let charNumber = 0;
+        let charNumber = characterResponse.length-1;
         //character[x].accessory_name
         let accessories = {
           hatN: characters[charNumber].attributes.accessories.hat.name,
@@ -88,7 +88,7 @@ export const Hero = () => {
 
   // Fetch de personnage de l'api
   useEffect(() => {
-    FetchCharacterApi(1);
+    FetchCharacterApi(idUser);
   }, []);
 
   const sX = 0.3;

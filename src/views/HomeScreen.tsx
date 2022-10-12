@@ -15,16 +15,11 @@ const HomeScreen = () => {
     <main>
       <section className="border-2 border-red-700 h-2/3">
         {userInfo !== null && (
-          // <Canvas>
-          //   <pointLight intensity={1} position={[1, 0, 0]}/>
-          //   <OrbitControls target={[0, 0, 0]} maxPolarAngle={1.45} />
-          //   <primitive object={character.scene}></primitive>
-          // </Canvas>
           <Canvas>
             <ambientLight intensity={0.4} />
             <pointLight intensity={.6} position={[0, 3, 3]}/>
-            <OrbitControls target={[0, 2, 0]} maxPolarAngle={1.45}/>
-            <Hero />
+            <OrbitControls target={[0, 2, 0]} maxPolarAngle={1.45} enablePan={false} enableZoom={false}/>
+            <Hero idUser={userInfo.id}/>
           </Canvas>
         )}
       </section>
