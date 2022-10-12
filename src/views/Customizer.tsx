@@ -1,20 +1,18 @@
-import Sliderpersonnage from "../components/Sliderpersonnage"
-import Sliderbackground from "../components/Sliderbackground"
+import Sliderpersonnage from "../components/Sliderpersonnage";
+import Sliderbackground from "../components/Sliderbackground";
 
 const Customizer = () => {
-// state
+  /* ---- INIT ---- */
 
-// react
+  /* ---- REACT ---- */
 
-// rendu
-return (
-  <main>
-    <Sliderpersonnage />
-    <Sliderbackground />
-    
-  </main>
-)
+  /* ---- RENDER ---- */
+  return (
+    <main>
+      <Sliderpersonnage />
+      <Sliderbackground />
+    </main>
+  );
+};
 
-}
-
-export default Customizer
+export default Customizer;

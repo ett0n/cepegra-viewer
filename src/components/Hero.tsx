@@ -1,28 +1,13 @@
 import { useGLTF, OrbitControls } from "@react-three/drei";
 import axios from "axios";
-import {
-  useEffect,
-  useMemo,
-  useState,
-  Suspense,
-  AnchorHTMLAttributes,
-} from "react";
+import { useEffect, useState, Suspense } from "react";
 import type { Anchors } from "../types/Anchors";
-import type {
-  Accessories,
-  Character,
-  AccessoriesStr,
-} from "../types/Character";
+import type { Character, AccessoriesStr } from "../types/Character";
 import { Canvas } from "@react-three/fiber";
 
-export const Hero = ({
-  idUser,
-  indexCharacter,
-}: {
-  idUser: number;
-  indexCharacter: number;
-}) => {
-  //defining
+export const Hero = ({idUser, indexCharacter}: {idUser: number;indexCharacter?: number;}) => {
+  /* ---- INIT ---- */
+  // Définition des ancres
   const anc: Anchors = {
     hats: [0, 3.43, -0.03],
     heads: [0, 3.1, -0.54],
@@ -32,10 +17,10 @@ export const Hero = ({
     foot_r: [0.34, 0.3, -0.02],
   };
 
-  //defining character GLB
+  // Définition du glb du personnage
   const character = useGLTF("/assets/character/character.glb");
 
-  //state managing active accessories
+  // Accessoires actifs du personnage
   const [getAccessories, setAccessories] = useState<AccessoriesStr>({
     hat: "/assets/accessories/hats/sphere-1/sphere-1.glb",
     head: "/assets/accessories/heads/glasses-1/glasses-1.glb",
@@ -45,14 +30,12 @@ export const Hero = ({
     feet: "/assets/accessories/feet/sneakers-1/sneakers-1.glb",
   });
 
-  //component using gltf source from state
-  const Accessory = ({
-    src,
-    clone,
-  }: {
-    src: string | null;
-    clone?: boolean;
-  }) => {
+  // taille des accessoires des pieds
+  const sX = 0.3;
+
+  /* ---- REACT ---- */
+  // Composant d'un accessoire
+  const Accessory = ({src, clone,}: {src: string | null;clone?: boolean;}) => {
     if (src === null) return null;
     const gltf = useGLTF(src, true);
     if (clone) {
@@ -74,11 +57,8 @@ export const Hero = ({
 
   // CALL API
   const FetchCharacterApi = async (idUser: number) => {
-    await axios
-      .get(
-        `http://api.xrlab.cepegra.be/api/appusers/${idUser}?populate[characters][populate][accessories][populate]=*`
-      )
-      //if API down
+    await axios.get(`${import.meta.env.VITE_API}appusers/${idUser}?populate[characters][populate][accessories][populate]=*`)
+      // Si api ne répond pas, catch erreur
       .catch((error: string) => {
         console.log("apidown or wrong id", error);
       })
@@ -88,9 +68,8 @@ export const Hero = ({
         characterResponse.forEach((element: Character) => {
           characters.push(element);
         });
-        let charNumber = indexCharacter == -1 ? characterResponse.length - 1 : indexCharacter;
-
-        console.log(`Chargement du chara [${charNumber}]`);
+        // index du personnage
+        let charNumber = indexCharacter == undefined ? characterResponse.length - 1 : indexCharacter;
         //character[x].accessory_name
         let accessories = {
           hatN: characters[charNumber].attributes.accessories.hat.name,
@@ -100,8 +79,8 @@ export const Hero = ({
           hand_rN: characters[charNumber].attributes.accessories.hand_r.name,
           feet: characters[charNumber].attributes.accessories.feet.name,
         };
-        console.log(accessories);
-        //refreshing accessory state with API accessories
+
+        // Mise à jour des accessoires du personnage venant de l'API
         setAccessories({
           hat:
             accessories.hatN !== null
@@ -131,13 +110,12 @@ export const Hero = ({
       });
   };
 
-  // Fetch de personnage de l'api
+  // Fetch de l'API quand indexCharacter (boutons slides) change
   useEffect(() => {
     FetchCharacterApi(idUser);
   }, [indexCharacter]);
 
-  const sX = 0.3;
-
+  /* ---- RENDER ---- */
   return (
     <>
       {/* Canvas accueillant le personnage en 3D */}
@@ -149,7 +127,7 @@ export const Hero = ({
           maxPolarAngle={1.45}
           enablePan={false}
           enableZoom={false}
-          enableRotate={indexCharacter === -1 ? true : false}
+          enableRotate={indexCharacter === undefined ? true : false}
         />
         <primitive object={character.scene}>
           <mesh position={anc.hats} scale={2}>
