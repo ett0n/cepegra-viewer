@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import "@google/model-viewer/dist/model-viewer";
-
+import {Hero} from "../components/Hero"
 import type from "../types/modelviewer";
 
 const ArpersoOK = () => {
