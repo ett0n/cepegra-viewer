@@ -3,7 +3,10 @@ import axios from "axios";
 import { useEffect, useState, Suspense } from "react";
 import type { Anchors } from "../types/Anchors";
 import type { Character, AccessoriesStr } from "../types/Character";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useLoader } from "@react-three/fiber";
+import * as THREE from "three";
+import { TextureLoader } from "three";
+
 
 export const Hero = ({idUser, indexCharacter}: {idUser: number;indexCharacter?: number;}) => {
   /* ---- INIT ---- */
@@ -28,6 +31,7 @@ export const Hero = ({idUser, indexCharacter}: {idUser: number;indexCharacter?: 
     hand_l: "/assets/accessories/hands/hammer-1/hammer-1.glb",
     hand_r: "/assets/accessories/hands/hammer-1/hammer-1.glb",
     feet: "/assets/accessories/feet/sneakers-1/sneakers-1.glb",
+    background: "/assets/accessories/backgrounds/sky-1.png",
   });
 
   // taille des accessoires des pieds
@@ -78,6 +82,7 @@ export const Hero = ({idUser, indexCharacter}: {idUser: number;indexCharacter?: 
           hand_lN: characters[charNumber].attributes.accessories.hand_l.name,
           hand_rN: characters[charNumber].attributes.accessories.hand_r.name,
           feet: characters[charNumber].attributes.accessories.feet.name,
+          background: characters[charNumber].attributes.accessories.background.name,
         };
 
         // Mise à jour des accessoires du personnage venant de l'API
@@ -106,6 +111,10 @@ export const Hero = ({idUser, indexCharacter}: {idUser: number;indexCharacter?: 
             accessories.feet !== null
               ? `/assets/accessories/feet/${accessories.feet}/${accessories.feet}.glb`
               : null,
+          background:
+            accessories.background !== null
+              ? `/assets/accessories/backgrounds/${accessories.background}.png`
+              : null,
         });
       });
   };
@@ -115,11 +124,19 @@ export const Hero = ({idUser, indexCharacter}: {idUser: number;indexCharacter?: 
     FetchCharacterApi(idUser);
   }, [indexCharacter]);
 
+
+const currentBackground = useLoader(TextureLoader,getAccessories.background!)
+
+
   /* ---- RENDER ---- */
   return (
     <>
       {/* Canvas accueillant le personnage en 3D */}
       <Canvas>
+      <mesh scale={100} position={[0, 0, 0]}>
+      <meshStandardMaterial map={currentBackground} side={THREE.DoubleSide}/>
+      <sphereGeometry/>
+      </mesh>
         <ambientLight intensity={0.4} />
         <pointLight intensity={0.6} position={[0, 3, 3]} />
         <OrbitControls
