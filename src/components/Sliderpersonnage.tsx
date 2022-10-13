@@ -21,13 +21,13 @@ import dataChar from '../data-char.json'
 
   //AXIOS - OK ça tourne portugesh de mort 
 
-  try {
+  const FetchData = async() => {   try {
     const response = await axios.get('https://jsonplaceholder.typicode.com/');    
   } catch (error) {
     const response = await axios.get('../data.json');
     console.log("MDR on charge le local")
     console.log(response);
-    }
+    }}
 
     const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
       const url = ev.target

@@ -24,11 +24,11 @@ import data from '../data.json';
   //   console.log("MDR on charge le local")
   //   console.log(response);
   //   }
-    try {
+ const FetchData = async() => {   try {
       const response = await axios.get('./data.json');
     } catch (error) {
       console.log(e)
-    }
+    }}
 
     const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
       const url = ev.currentTarget.dataset.url

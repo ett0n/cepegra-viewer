@@ -11,7 +11,6 @@ return (
   <main>
     <Sliderpersonnage />
     <Sliderbackground />
-    
   </main>
 )
 

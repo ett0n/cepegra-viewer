@@ -220,3 +220,29 @@ i.fa-child-reaching{
   width: 100%;
   margin: 0 auto;
 }
+
+#error {
+  background-color: #ffffffdd;
+  border-radius: 16px;
+  font-size: 50px;
+  color: black;
+  padding: 16px;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate3d(-50%, -50%, 0);
+  transition: opacity 0.3s;
+}
+#error.hide {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 2s, opacity 1s 1s;
+}
+
+model-viewer{
+  height: 40vh;
+}
+
+#ar-button{
+  @apply btn;
+}
