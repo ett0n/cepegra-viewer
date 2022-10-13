@@ -114,7 +114,7 @@ export const Hero = ({idUser, indexCharacter}: {idUser: number;indexCharacter?: 
           background:
             accessories.background !== null
               ? `/assets/accessories/backgrounds/${accessories.background}.png`
-              : null,
+              : `/assets/accessories/backgrounds/sky-1.png`,
         });
       });
   };
@@ -132,7 +132,7 @@ const currentBackground = useLoader(TextureLoader,getAccessories.background!)
   return (
     <>
       {/* Canvas accueillant le personnage en 3D */}
-      <Canvas>
+      <Canvas style={{position:"absolute", top:"0", left:"0", width:"100vw", height:"100vh", zIndex:"1"}}>
       <mesh scale={100} position={[0, 0, 0]}>
       <meshStandardMaterial map={currentBackground} side={THREE.DoubleSide}/>
       <sphereGeometry/>
@@ -140,7 +140,7 @@ const currentBackground = useLoader(TextureLoader,getAccessories.background!)
         <ambientLight intensity={0.4} />
         <pointLight intensity={0.6} position={[0, 3, 3]} />
         <OrbitControls
-          target={[0, 2, 0]}
+          target={[0, 1.4, 0]}
           maxPolarAngle={1.45}
           enablePan={false}
           enableZoom={false}
