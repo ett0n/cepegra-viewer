@@ -2,13 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Hero } from "./Hero";
 
-const Sliderpersonnage = ({
-  getIndexCharacter,
-  setIndexCharacter,
-}: {
-  getIndexCharacter: number;
-  setIndexCharacter: Function;
-}) => {
+const Sliderpersonnage = ({getIndexCharacter,setIndexCharacter,}: {getIndexCharacter: number;setIndexCharacter: Function;}) => {
   /* ---- INIT ---- */
   const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
   const [getAmountCharacters, setAmountCharacters] = useState(0);

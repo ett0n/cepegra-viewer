@@ -10,15 +10,21 @@ const Customizer = () => {
 
   /* ---- REACT ---- */
   const patchTest = async () => {
-    const obj = { "pages" : 400 }
 
-    const result = await axios.patch("https://quentin-cepegra-default-rtdb.europe-west1.firebasedatabase.app/biblio/-N5iE0dtDPdyd37PDfpH/livres/-N5iFFv63luBcEkVL8_r.json", obj)
+    // Récupération des données de l'API
+    const data = await axios.get("https://quentin-cepegra-default-rtdb.europe-west1.firebasedatabase.app/biblio/-N5iE0dtDPdyd37PDfpH/livres/-N5j_kvMJ6998x-NLvxD.json")
+
+    // Modification
+    data.data.pages = 2333
+
+    // Patch des données
+    const result = await axios.put("https://quentin-cepegra-default-rtdb.europe-west1.firebasedatabase.app/biblio/-N5iE0dtDPdyd37PDfpH/livres/-N5j_kvMJ6998x-NLvxD.json", data.data)
 
     console.log(result)
   }
 
   useEffect(() => {
-    patchTest()
+    // patchTest()
   }, [])
 
   /* ---- RENDER ---- */
