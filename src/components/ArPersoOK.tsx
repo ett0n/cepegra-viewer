@@ -2,16 +2,16 @@
 
 import { useEffect } from "react";
 import "@google/model-viewer/dist/model-viewer";
-import {Hero} from "../components/Hero"
 import type from "../types/modelviewer";
 
 const ArpersoOK = () => {
-  useEffect( () => {
-    const modelViewer = document.querySelector('model-viewer')!;
-    const errorMessage = document.querySelector("#error")!;
-    errorMessage.innerHTML = JSON.stringify(modelViewer.canActivateAR)
-    console.log("model-viewer can activate AR: " + modelViewer.canActivateAR);
-  }, [])
+  // useEffect( () => {
+  //   const modelViewer = document.querySelector('model-viewer')!;
+  //   const errorMessage = document.querySelector("#error")!;
+  //   errorMessage.innerHTML = JSON.stringify(modelViewer.canActivateAR)
+  //   console.log("model-viewer can activate AR: " + modelViewer.canActivateAR);
+  // }, [])
+  // ⬆️ ceci était censé être un message d'erreur s'affichant quand l'AR n'est pas supporté. Cependant, le message d'erreur s'affiche même sur certains devices supportant l'AR
 
 
   return (
@@ -24,10 +24,9 @@ const ArpersoOK = () => {
     camera-controls
     auto-rotate ar ar-modes="webxr quick-look">
 <button slot="ar-button" id="ar-button">
-Voir en AR BOllos
+Voir en AR
 </button>
-{/* <button properties="canActivateAR">COUP DE GENI</button> */}
-<div id="error" className="">Nieu d'chance em bieau, chang eu't phone de brin</div>
+{/* <div id="error" className="">`Erreur, il semble que votre appareil ne supporte pas l'AR`</div> */}
 </model-viewer>
     </div>
   )
