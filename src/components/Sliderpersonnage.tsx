@@ -27,6 +27,8 @@ const Sliderpersonnage = ({getIndexCharacter,setIndexCharacter,}: {getIndexChara
   // FetchCharacterApi seulement au chargement du composant
   useEffect(() => {
     FetchCharacterApi();
+    // SelectIndexCharacter("next")
+    // SelectIndexCharacter("previous")
   }, []);
 
   // change l'index du character à afficher au clique d'un bouton/slider
@@ -63,7 +65,7 @@ const Sliderpersonnage = ({getIndexCharacter,setIndexCharacter,}: {getIndexChara
         onClick={() => SelectIndexCharacter("next")}
       ></button>
       {/* Personnage */}
-      <Hero idUser={userInfo.id} indexCharacter={getIndexCharacter} />
+      <Hero idUser={userInfo.id} indexCharacter={getIndexCharacter}/>
     </section>
   );
 };

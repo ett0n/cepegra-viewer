@@ -30,7 +30,7 @@ export const Hero = ({
 
   // Accessoires actifs du personnage
   const [getAccessories, setAccessories] = useState<AccessoriesStr>({
-    hat: null,
+    hat: "assets/accessories/hats/wizard-1/wizard-1.glb",
     head: null,
     body: null,
     hand_l: null,
@@ -49,6 +49,7 @@ export const Hero = ({
 
   // CALL API
   const FetchCharacterApi = async (idUser: number) => {
+    console.log("aaaaaaa")
     await axios
       .get(
         `${
@@ -81,6 +82,9 @@ export const Hero = ({
           background:
             characters[charNumber].attributes.accessories.background.name,
         };
+
+        console.log(accessories);
+
 
         // Mise à jour des accessoires du personnage venant de l'API
         setAccessories({
