@@ -30,9 +30,10 @@ import data from '../data.json';
 
 
 
-const Sliderbackground = () => {
+const Sliderbackground = ({getIndexCharacter}:{getIndexCharacter:number}) => {
   /* ---- INIT ---- */
   const [getBackgrounds, setBackgrounds]=useState([])
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
   /* ---- REACT ---- */
   const GetBackgroundApi = async () => {
     try {
@@ -44,9 +45,8 @@ const Sliderbackground = () => {
 
 }
 const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
-  const url = ev.currentTarget.dataset.url
-  document.body.style.backgroundImage = `url(${url})`
-  console.log("c'est la merde'")
+  const name = ev.target.dataset.name
+  console.log(`Changement du background "${name}" du personnage numero ${getIndexCharacter} de l'user ${userInfo.id}`)
 }
 
 useEffect(()=>{GetBackgroundApi()},[])
@@ -62,7 +62,7 @@ useEffect(()=>{GetBackgroundApi()},[])
          className="mySwiper flex flex-col justify-center">
            {getBackgrounds.map((bg, index) => (
           <SwiperSlide key={index}><a onClick={changeBackground}
-          data-url={"/assets/accessories/backgrounds/"+bg.uid_name+".png"} className="cursor-pointer mx-auto h-36"><img src={"/assets/accessories/backgrounds/"+bg.uid_name+".png"} alt="ffkeofk"></img></a></SwiperSlide>
+          data-url={"/assets/accessories/backgrounds/"+bg.uid_name+".png"} className="cursor-pointer mx-auto h-36"><img src={"/assets/accessories/backgrounds/"+bg.uid_name+".png"} alt="ffkeofk" data-name={bg.uid_name}></img></a></SwiperSlide>
                ))}
           </Swiper>
        </div>

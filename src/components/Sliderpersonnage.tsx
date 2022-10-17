@@ -2,52 +2,72 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Hero } from "./Hero";
 
-const Sliderpersonnage = () => {
+const Sliderpersonnage = ({
+  getIndexCharacter,
+  setIndexCharacter,
+}: {
+  getIndexCharacter: number;
+  setIndexCharacter: Function;
+}) => {
   /* ---- INIT ---- */
   const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
-  const [getAmountCharacters, setAmountCharacters] = useState(0)
-  const [getIndexCharacter, setIndexCharacter] = useState(0)
+  const [getAmountCharacters, setAmountCharacters] = useState(0);
 
   /* ---- REACT ---- */
   // Récupération du nombre de personnage de l'utilisateur
   const FetchCharacterApi = async () => {
-    await axios.get(`${import.meta.env.VITE_API}appusers/${userInfo.id}?populate[characters][populate][accessories][populate]=*`)
+    await axios
+      .get(
+        `${import.meta.env.VITE_API}appusers/${
+          userInfo.id
+        }?populate[characters][populate][accessories][populate]=*`
+      )
       .catch((error: string) => console.log("apidown or wrong id", error))
-      .then((response: any) => setAmountCharacters(response.data.data.attributes.characters.data.length));
+      .then((response: any) =>
+        setAmountCharacters(
+          response.data.data.attributes.characters.data.length
+        )
+      );
   };
 
   // FetchCharacterApi seulement au chargement du composant
   useEffect(() => {
-    FetchCharacterApi()
-  }, [])
+    FetchCharacterApi();
+  }, []);
 
   // change l'index du character à afficher au clique d'un bouton/slider
-  const SelectIndexCharacter = (selection:string) => {
+  const SelectIndexCharacter = (selection: string) => {
     if (selection === "next") {
-      if(getIndexCharacter < getAmountCharacters - 1) {
-        setIndexCharacter(getIndexCharacter + 1)
-      }
-      else {
-        setIndexCharacter(0)
+      if (getIndexCharacter < getAmountCharacters - 1) {
+        setIndexCharacter(getIndexCharacter + 1);
+      } else {
+        setIndexCharacter(0);
       }
     }
     if (selection === "previous") {
-      if(getIndexCharacter > 0) {
-        setIndexCharacter(getIndexCharacter - 1)
-      }
-      else {
-        setIndexCharacter(getAmountCharacters - 1)
+      if (getIndexCharacter > 0) {
+        setIndexCharacter(getIndexCharacter - 1);
+      } else {
+        setIndexCharacter(getAmountCharacters - 1);
       }
     }
-  }
+  };
 
   /* ---- RENDER ---- */
   return (
-    <section className="h-2/3">      
+    <section className="h-2/3">
       {/* Bouton personnage précédant */}
-      <button className="swiper-button-prev" style={{top: "45%"}} onClick={() => SelectIndexCharacter("previous")}></button>
+      <button
+        className="swiper-button-prev"
+        style={{ top: "45%" }}
+        onClick={() => SelectIndexCharacter("previous")}
+      ></button>
       {/* Bouton personnage suivant */}
-      <button className="swiper-button-next"  style={{top: "45%"}} onClick={() => SelectIndexCharacter("next")}></button>
+      <button
+        className="swiper-button-next"
+        style={{ top: "45%" }}
+        onClick={() => SelectIndexCharacter("next")}
+      ></button>
       {/* Personnage */}
       <Hero idUser={userInfo.id} indexCharacter={getIndexCharacter} />
     </section>
