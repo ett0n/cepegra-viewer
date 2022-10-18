@@ -22,7 +22,7 @@ const ArpersoOK = () => {
     errorMessage.innerHTML = JSON.stringify(modelViewer.canActivateAR)
     console.log("model-viewer can activate AR: " + modelViewer.canActivateAR);
     */
-  }, [modelViewer.canActivateAR])
+  }, [])
   // ⬆️ ceci était censé être un message d'erreur s'affichant quand l'AR n'est pas supporté. Cependant, le message d'erreur s'affiche même sur certains devices supportant l'AR
 
   return (
