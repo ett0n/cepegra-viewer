@@ -1,8 +1,8 @@
 import { useGLTF } from "@react-three/drei";
 import { Hero } from "../components/Hero";
 
-const HomeScreen = ({GoToAR,}: { GoToAR: () => void; }) => {
-const HomeScreen = ({setIDCharacter, setIDAccessories}:{setIDCharacter:Function;setIDAccessories:Function}) => {
+
+const HomeScreen = ({setIDCharacter, setIDAccessories, GoToAR}:{setIDCharacter:Function;setIDAccessories:Function, GoToAR: () => void; }) => {
   /* ---- INIT ---- */
   //state
   const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
@@ -25,6 +25,5 @@ const HomeScreen = ({setIDCharacter, setIDAccessories}:{setIDCharacter:Function;
     </main>
   );
 };
-}
 
 export default HomeScreen;
