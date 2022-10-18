@@ -18,16 +18,12 @@ import Customizer from "./views/Customizer"
 /* --------------------------------- Interacts --------------------------------- */
 interface UserInfo {id: number; pseudo: string;}
 
-const handleRedirect = () => {
-  window.location.href = 'HomeScreen'
-}
-
 
 /* -------------------------------- Application -------------------------------- */
 function App(): JSX.Element {
   /* ----------- state ----------- */
   const userInfo= JSON.parse(localStorage.getItem('userInfo')) 
-  const [location, setLocation] = useState('HomeScreen'); // par défaut dit que le path = HomeScreen pour bypasser l'écran de connection si on a déjà userInfo dans local storage
+  const [location, setLocation] = useState(''); // par défaut dit que le path = HomeScreen pour bypasser l'écran de connection si on a déjà userInfo dans local storage
   const pages = ['Accueil', 'HomeScreen', 'Credits', 'Notifications', 'Gallery', 'Customizer'];
 
   const menuPages = [
@@ -87,6 +83,10 @@ function App(): JSX.Element {
     }
   }
 
+  const handleRedirect = () => {
+    setLocation('HomeScreen')
+  }
+
 /* ----------- rendu ----------- */
   return (<>
   { (JSON.parse(localStorage.getItem('userInfo')) !== null || location !== 'Accueil') &&
@@ -129,7 +129,7 @@ function App(): JSX.Element {
         { // si  le localStorage ne contient pas user Info, alors on affiche Accueil et on set la location sur accueil
           JSON.parse(localStorage.getItem('userInfo')) === null
             ? window.history.pushState(location, '', 'Accueil') && <Accueil handleRedirect={handleRedirect}/>
-            : window.history.pushState(location, '', location) }
+            : window.history.pushState(location, '', 'HomeScreen') }
         {/* // je ne sais plus pourquoi j'avais ça, j'ai l'impression que ça fait double emploi avec l'instruction précédente mais je suis plus certain donc je garde en comm
          {JSON.parse(localStorage.getItem('userInfo')) === null && window.history.pushState(location, '', 'Accueil') && location === 'Accueil'} */}
         { // permet d'afficher l'écran de connexion quand on le clique depuis le menu. Utile tant qu'on développe, on peut le retirer par après 
