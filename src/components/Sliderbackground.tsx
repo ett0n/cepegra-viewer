@@ -47,6 +47,7 @@ const Sliderbackground = ({ getIndexCharacter, getAmountCharacters, getIDCharact
       }
     }
 
+    // PUT API
     try {
       const result = axios.put(`https://api.xrlab.cepegra.be/api/characters/${getIDCharacter}?populate=deep`, dataToPut)
       console.log("PUT réussi")

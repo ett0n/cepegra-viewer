@@ -7,6 +7,7 @@ const Customizer = ({getIDCharacter, setIDCharacter, getIDAccessories, setIDAcce
   // State de l'index du personnage affiché. Requis pour Sliderbackground et Sliderpersonnage
   const [getIndexCharacter, setIndexCharacter] = useState(undefined)
   const [getAmountCharacters, setAmountCharacters] = useState(0);
+  const [getHeroRefresh, setHeroRefresh] = useState(true)
 
 
   /* ---- RENDER ---- */

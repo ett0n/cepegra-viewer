@@ -7,9 +7,9 @@ import { Canvas, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 import { TextureLoader } from "three";
 
-export const Hero = ({ idUser, indexCharacter, setIDCharacter, setIDAccessories}: { idUser: number; indexCharacter?: number; setIDCharacter: Function; setIDAccessories:Function}) => {
+export const Hero = ({ idUser, indexCharacter, setIDCharacter, setIDAccessories}: { idUser: number; indexCharacter?: number; setIDCharacter: Function; setIDAccessories:Function;}) => {
   /* ---- INIT ---- */
-
+  const [getRefresh, setRefresh] = useState(true)
   // Définition des ancres
   const anc: Anchors = {
     hats: [0, 0, 0],
