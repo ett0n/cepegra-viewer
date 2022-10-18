@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* ----------------------------------- Import ----------------------------------- */
 import Axios from "axios";
 import React, { useState, useEffect } from "react";
@@ -9,7 +10,7 @@ interface UserInfo {
 }
 
 /* ------------------------------------ App ------------------------------------ */
-const Accueil = () => {
+const Accueil = ({handleRedirect}) => {
   /* ----------- state ----------- */
 
   const [getUser, setUser] = useState<UserInfo>();
@@ -56,7 +57,8 @@ const Accueil = () => {
       } else {
         // si result = 1 alors on on stocke le tableau user en localStorage et on redirige sur HomeScreen
         localStorage.setItem("userInfo", JSON.stringify(getUser));
-        window.location.href = "HomeScreen";
+        handleRedirect()
+        // window.location.href = "HomeScreen";
       }
     }
   };

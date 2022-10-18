@@ -15,8 +15,12 @@ import Notifications from "./views/Notifications";
 import Gallery from "./views/Gallery";
 import Customizer from "./views/Customizer"
 
-/* --------------------------------- Interaces --------------------------------- */
+/* --------------------------------- Interacts --------------------------------- */
 interface UserInfo {id: number; pseudo: string;}
+
+const handleRedirect = () => {
+  window.location.href = 'HomeScreen'
+}
 
 
 /* -------------------------------- Application -------------------------------- */
@@ -85,7 +89,7 @@ function App(): JSX.Element {
 
 /* ----------- rendu ----------- */
   return (<>
-  { (JSON.parse(localStorage.getItem('userInfo')) === null || location !== 'Accueil') &&
+  { (JSON.parse(localStorage.getItem('userInfo')) !== null || location !== 'Accueil') &&
   // si userInfo n'est pas dans le localStorage ou si la location est différente de Accueil, alors on affiche le menu. Attention l'effet de blur du menu est appliqué dans le css sur le fond d'écran par défaut, il faut le rendre dynamique
       (<header className="h-24">
         <nav className="py-8 px-4 absolute z-50 right-0">
@@ -124,12 +128,12 @@ function App(): JSX.Element {
         </header>)}
         { // si  le localStorage ne contient pas user Info, alors on affiche Accueil et on set la location sur accueil
           JSON.parse(localStorage.getItem('userInfo')) === null
-            ? window.history.pushState(location, '', 'Accueil') && <Accueil />
+            ? window.history.pushState(location, '', 'Accueil') && <Accueil handleRedirect={handleRedirect}/>
             : window.history.pushState(location, '', location) }
         {/* // je ne sais plus pourquoi j'avais ça, j'ai l'impression que ça fait double emploi avec l'instruction précédente mais je suis plus certain donc je garde en comm
          {JSON.parse(localStorage.getItem('userInfo')) === null && window.history.pushState(location, '', 'Accueil') && location === 'Accueil'} */}
         { // permet d'afficher l'écran de connexion quand on le clique depuis le menu. Utile tant qu'on développe, on peut le retirer par après 
-          location === 'Accueil' && <Accueil />} 
+          location === 'Accueil' && <Accueil handleRedirect={handleRedirect} />} 
           {/* Si il y a bien un élément userInfo dans le localStorage, alors on permet l'accès aux routes ci-dessous */}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'HomeScreen' && <HomeScreen />}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Credits' && <Credits />}
