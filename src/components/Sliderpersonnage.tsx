@@ -1,61 +1,60 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Hero } from "./Hero";
 
-  import React, { useRef, useState } from "react";
-  // Import Swiper React components
-  import { Swiper, SwiperSlide } from "swiper/react";
+const Sliderpersonnage = ({getIndexCharacter,setIndexCharacter,}: {getIndexCharacter: number;setIndexCharacter: Function;}) => {
+  /* ---- INIT ---- */
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
+  const [getAmountCharacters, setAmountCharacters] = useState(0);
+  const [getIdCharacters, setIdCharacters] = useState(0);
 
-  import axios from "axios";
-  
-  // Import Swiper styles
-  import "swiper/css";
-  import "swiper/css/pagination";
-  import "swiper/css/navigation";
-  
-  import index from "./index.scss";
-  
-  // import required modules
-  import { Pagination, Navigation } from "swiper";
+  /* ---- REACT ---- */
+  // Récupération du nombre de personnage de l'utilisateur
+  const FetchCharacterApi = async () => {
+    await axios
+      .get(`${import.meta.env.VITE_API}appusers/${userInfo.id}?populate[characters][populate][accessories][populate]=*`)
+      .catch((error: string) => console.log("apidown or wrong id", error))
+      .then((response: any) =>
+        setAmountCharacters(response.data.data.attributes.characters.data.length)
+      );
+  };
 
-  // Data Non-Axios
-import data from '../data.json';
-import dataChar from '../data-char.json'
+  // FetchCharacterApi seulement au chargement du composant
+  useEffect(() => {
+    FetchCharacterApi();
+  }, []);
 
-  //AXIOS - OK ça tourne portugesh de mort 
-
-  const FetchData = async() => {   try {
-    const response = await axios.get('https://jsonplaceholder.typicode.com/');    
-  } catch (error) {
-    const response = await axios.get('../data.json');
-    console.log("MDR on charge le local")
-    console.log(response);
-    }}
-
-    const changeBackground = (ev: React.MouseEvent<HTMLAnchorElement>) => {
-      const url = ev.target
-      document.body.style.backgroundImage = `url(${url})`
+  // change l'index du character à afficher au clique d'un bouton/slider
+  const SelectIndexCharacter = (selection: string) => {
+    if (selection === "next") {
+      if (getIndexCharacter < getAmountCharacters - 1) {
+        setIndexCharacter(getIndexCharacter + 1);
+      } else {
+        setIndexCharacter(0);
+      }
     }
-    
-  
-  const Sliderpersonnage = () => {
+    if (selection === "previous") {
+      if (getIndexCharacter > 0) {
+        setIndexCharacter(getIndexCharacter - 1);
+      } else {
+        setIndexCharacter(getAmountCharacters - 1);
+      }
+    }
+  };
 
-    
-    return (
-      <section className="border-2 border-red-700 h-2/3">
+  /* ---- RENDER ---- */
+  return (
+    <section className="h-2/3">
+      {/* Bouton personnage précédant */}
+      <button className="swiper-button-prev" style={{ top: "45%" }} onClick={() => SelectIndexCharacter("previous")} ></button>
+
+      {/* Bouton personnage suivant */}
+      <button className="swiper-button-next" style={{ top: "45%" }} onClick={() => SelectIndexCharacter("next")} ></button>
       
-        <Swiper
-          
-          navigation={true}
-          modules={[Navigation]}
-          className="mySwiper my-auto h-full"
-        >
-        {dataChar.resources.map((resource, index) => (
-        <SwiperSlide key={index}><a onClick={changeBackground}
-        data-url={resource.imageUrl} className="cursor-pointer w-2/3 mx-auto mb-12"><img src={resource.imageUrl || ''} alt="ffkeofk"></img></a></SwiperSlide>
-      ))}
-        </Swiper>
-      </section>
-    );
-  }
+      {/* Personnage */}
+      <Hero idUser={userInfo.id} indexCharacter={getIndexCharacter}/>
+    </section>
+  );
+};
 
-
-
-export default Sliderpersonnage
+export default Sliderpersonnage;

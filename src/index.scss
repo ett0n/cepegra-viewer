@@ -138,6 +138,7 @@ body {
     right: 0;
     background-image: url("./assets/background-2d.jpg");
     // background-size: cover;
+    background: rgba($color: #000000, $alpha: 0.4); //temporary for clarity when we are debugging
     filter: blur(5px);
   }
 }
@@ -155,7 +156,7 @@ main {
 
 
 body {
-  background-image: url("./assets/background-2d.jpg");
+  // background-image: url("./assets/white_default.png");
   background-size: cover;
   height: 100vh;
 }

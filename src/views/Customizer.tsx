@@ -1,19 +1,19 @@
-import Sliderpersonnage from "../components/Sliderpersonnage"
-import Sliderbackground from "../components/Sliderbackground"
+import Sliderpersonnage from "../components/Sliderpersonnage";
+import Sliderbackground from "../components/Sliderbackground";
+import { useState } from "react";
 
 const Customizer = () => {
-// state
+  /* ---- INIT ---- */
+  // State de l'index du personnage affiché. Requis pour Sliderbackground et Sliderpersonnage
+  const [getIndexCharacter, setIndexCharacter] = useState(0)
 
-// react
+  /* ---- RENDER ---- */
+  return (
+    <main>
+      <Sliderpersonnage getIndexCharacter={getIndexCharacter} setIndexCharacter={setIndexCharacter}/>
+      <Sliderbackground getIndexCharacter={getIndexCharacter}/>
+    </main>
+  );
+};
 
-// rendu
-return (
-  <main>
-    <Sliderpersonnage />
-    <Sliderbackground />
-  </main>
-)
-
-}
-
-export default Customizer
+export default Customizer;
