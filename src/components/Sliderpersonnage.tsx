@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Hero } from "./Hero";
 
-const Sliderpersonnage = ({getIndexCharacter,setIndexCharacter,}: {getIndexCharacter: number;setIndexCharacter: Function;}) => {
+const Sliderpersonnage = ({getIndexCharacter,setIndexCharacter,getAmountCharacters, setAmountCharacters, setIDCharacter, setIDAccessories}: {getIndexCharacter: number|undefined;setIndexCharacter: Function; getAmountCharacters:number; setAmountCharacters:Function;setIDCharacter:Function;setIDAccessories:Function;}) => {
   /* ---- INIT ---- */
   const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
-  const [getAmountCharacters, setAmountCharacters] = useState(0);
   const [getIdCharacters, setIdCharacters] = useState(0);
 
   /* ---- REACT ---- */
@@ -27,17 +26,17 @@ const Sliderpersonnage = ({getIndexCharacter,setIndexCharacter,}: {getIndexChara
   // change l'index du character à afficher au clique d'un bouton/slider
   const SelectIndexCharacter = (selection: string) => {
     if (selection === "next") {
-      if (getIndexCharacter < getAmountCharacters - 1) {
-        setIndexCharacter(getIndexCharacter + 1);
+      if (getIndexCharacter! < getAmountCharacters - 1) {
+        setIndexCharacter(getIndexCharacter! + 1);
       } else {
         setIndexCharacter(0);
       }
     }
     if (selection === "previous") {
-      if (getIndexCharacter > 0) {
-        setIndexCharacter(getIndexCharacter - 1);
+      if (getIndexCharacter! > 0) {
+        setIndexCharacter(getIndexCharacter! - 1);
       } else {
-        setIndexCharacter(getAmountCharacters - 1);
+        setIndexCharacter(getAmountCharacters! - 1);
       }
     }
   };
@@ -52,7 +51,7 @@ const Sliderpersonnage = ({getIndexCharacter,setIndexCharacter,}: {getIndexChara
       <button className="swiper-button-next" style={{ top: "45%" }} onClick={() => SelectIndexCharacter("next")} ></button>
       
       {/* Personnage */}
-      <Hero idUser={userInfo.id} indexCharacter={getIndexCharacter}/>
+      <Hero idUser={userInfo.id} indexCharacter={getIndexCharacter} setIDCharacter={setIDCharacter} setIDAccessories={setIDAccessories}/>
     </section>
   );
 };
