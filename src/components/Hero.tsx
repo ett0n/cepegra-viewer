@@ -49,7 +49,6 @@ export const Hero = ({
 
   // CALL API
   const FetchCharacterApi = async (idUser: number) => {
-    console.log("aaaaaaa")
     await axios
       .get(
         `${
@@ -61,7 +60,7 @@ export const Hero = ({
         console.log("apidown or wrong id", error);
       })
       .then((response: any) => {
-        console.log("jecalllapi");
+        console.log("Hero.tsx: API fetched");
         let characterResponse = response.data.data.attributes.characters.data;
         characterResponse.forEach((element: Character) => {
           characters.push(element);
@@ -82,9 +81,6 @@ export const Hero = ({
           background:
             characters[charNumber].attributes.accessories.background.name,
         };
-
-        console.log(accessories);
-
 
         // Mise à jour des accessoires du personnage venant de l'API
         setAccessories({
