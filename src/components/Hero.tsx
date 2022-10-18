@@ -7,7 +7,7 @@ import { Canvas, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 import { TextureLoader } from "three";
 
-export const Hero = ({ idUser, indexCharacter, }: { idUser: number; indexCharacter?: number; }) => {
+export const Hero = ({ idUser, indexCharacter, setIDCharacter, setIDAccessories}: { idUser: number; indexCharacter?: number; setIDCharacter: Function; setIDAccessories:Function}) => {
   /* ---- INIT ---- */
 
   // Définition des ancres
@@ -59,6 +59,9 @@ export const Hero = ({ idUser, indexCharacter, }: { idUser: number; indexCharact
         });
         // index du personnage
         let charNumber = indexCharacter == undefined ? characterResponse.length - 1 : indexCharacter;
+        // ID du personnage
+        setIDCharacter(characterResponse[charNumber].id)
+        setIDAccessories(characterResponse[charNumber].attributes.accessories.id)
         //character[x].accessory_name
         let accessories = {
           hatN: characters[charNumber].attributes.accessories.hat.name,
@@ -159,6 +162,7 @@ export const Hero = ({ idUser, indexCharacter, }: { idUser: number; indexCharact
           enableZoom={false}
           enableRotate={indexCharacter === undefined ? true : false}
         />
+        <Suspense>
         <primitive object={character.scene}>
           <mesh position={anc.hats} scale={1}>
             <Accessory src={getAccessories.hat} />
@@ -182,6 +186,7 @@ export const Hero = ({ idUser, indexCharacter, }: { idUser: number; indexCharact
             <Accessory src={getAccessories.feet} clone={true} />
           </mesh>
         </primitive>
+        </Suspense>
       </Canvas>
     </>
   );

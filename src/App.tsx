@@ -36,6 +36,9 @@ function App(): JSX.Element {
     {name: 'Customizer', class: 'fa-wand-magic-sparkles'}
   ]
 
+  const [getIDCharacter, setIDCharacter] = useState<Number>(0)
+  const [getIDAccessories, setIDAccessories] = useState<Number>(0)
+
   useEffect( () => {
     // on stock le path dans une const. Si path est inclu dans les pages qui sont listées en haut du state, alors on change la location, sinon on renvoie 404
     const path = window.location.pathname.replace('/', '')
@@ -131,11 +134,11 @@ function App(): JSX.Element {
         { // permet d'afficher l'écran de connexion quand on le clique depuis le menu. Utile tant qu'on développe, on peut le retirer par après 
           location === 'Accueil' && <Accueil />} 
           {/* Si il y a bien un élément userInfo dans le localStorage, alors on permet l'accès aux routes ci-dessous */}
-        {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'HomeScreen' && <HomeScreen />}
+        {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'HomeScreen' && <HomeScreen setIDCharacter={setIDCharacter} setIDAccessories={setIDAccessories}/>}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Credits' && <Credits />}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Notifications' && <Notifications />}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Gallery' && <Gallery />}
-        {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Customizer' && <Customizer />} 
+        {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Customizer' && <Customizer getIDCharacter={getIDCharacter} setIDCharacter={setIDCharacter} getIDAccessories={getIDAccessories} setIDAccessories={setIDAccessories}/>} 
 </>)
 }
 export default App;
