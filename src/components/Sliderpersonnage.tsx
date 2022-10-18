@@ -6,29 +6,22 @@ const Sliderpersonnage = ({getIndexCharacter,setIndexCharacter,}: {getIndexChara
   /* ---- INIT ---- */
   const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
   const [getAmountCharacters, setAmountCharacters] = useState(0);
+  const [getIdCharacters, setIdCharacters] = useState(0);
 
   /* ---- REACT ---- */
   // Récupération du nombre de personnage de l'utilisateur
   const FetchCharacterApi = async () => {
     await axios
-      .get(
-        `${import.meta.env.VITE_API}appusers/${
-          userInfo.id
-        }?populate[characters][populate][accessories][populate]=*`
-      )
+      .get(`${import.meta.env.VITE_API}appusers/${userInfo.id}?populate[characters][populate][accessories][populate]=*`)
       .catch((error: string) => console.log("apidown or wrong id", error))
       .then((response: any) =>
-        setAmountCharacters(
-          response.data.data.attributes.characters.data.length
-        )
+        setAmountCharacters(response.data.data.attributes.characters.data.length)
       );
   };
 
   // FetchCharacterApi seulement au chargement du composant
   useEffect(() => {
     FetchCharacterApi();
-    // SelectIndexCharacter("next")
-    // SelectIndexCharacter("previous")
   }, []);
 
   // change l'index du character à afficher au clique d'un bouton/slider
@@ -53,17 +46,11 @@ const Sliderpersonnage = ({getIndexCharacter,setIndexCharacter,}: {getIndexChara
   return (
     <section className="h-2/3">
       {/* Bouton personnage précédant */}
-      <button
-        className="swiper-button-prev"
-        style={{ top: "45%" }}
-        onClick={() => SelectIndexCharacter("previous")}
-      ></button>
+      <button className="swiper-button-prev" style={{ top: "45%" }} onClick={() => SelectIndexCharacter("previous")} ></button>
+
       {/* Bouton personnage suivant */}
-      <button
-        className="swiper-button-next"
-        style={{ top: "45%" }}
-        onClick={() => SelectIndexCharacter("next")}
-      ></button>
+      <button className="swiper-button-next" style={{ top: "45%" }} onClick={() => SelectIndexCharacter("next")} ></button>
+      
       {/* Personnage */}
       <Hero idUser={userInfo.id} indexCharacter={getIndexCharacter}/>
     </section>

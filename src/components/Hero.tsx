@@ -7,14 +7,9 @@ import { Canvas, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 import { TextureLoader } from "three";
 
-export const Hero = ({
-  idUser,
-  indexCharacter,
-}: {
-  idUser: number;
-  indexCharacter?: number;
-}) => {
+export const Hero = ({ idUser, indexCharacter, }: { idUser: number; indexCharacter?: number; }) => {
   /* ---- INIT ---- */
+
   // Définition des ancres
   const anc: Anchors = {
     hats: [0, 0, 0],
@@ -30,7 +25,7 @@ export const Hero = ({
 
   // Accessoires actifs du personnage
   const [getAccessories, setAccessories] = useState<AccessoriesStr>({
-    hat: "assets/accessories/hats/wizard-1/wizard-1.glb",
+    hat: null,
     head: null,
     body: null,
     hand_l: null,
@@ -50,11 +45,8 @@ export const Hero = ({
   // CALL API
   const FetchCharacterApi = async (idUser: number) => {
     await axios
-      .get(
-        `${
-          import.meta.env.VITE_API
-        }appusers/${idUser}?populate[characters][populate][accessories][populate]=*`
-      )
+      .get(`${import.meta.env.VITE_API}appusers/${idUser}?populate[characters][populate][accessories][populate]=*`)
+
       // Si api ne répond pas, catch erreur
       .catch((error: string) => {
         console.log("apidown or wrong id", error);
@@ -66,10 +58,7 @@ export const Hero = ({
           characters.push(element);
         });
         // index du personnage
-        let charNumber =
-          indexCharacter == undefined
-            ? characterResponse.length - 1
-            : indexCharacter;
+        let charNumber = indexCharacter == undefined ? characterResponse.length - 1 : indexCharacter;
         //character[x].accessory_name
         let accessories = {
           hatN: characters[charNumber].attributes.accessories.hat.name,
@@ -121,19 +110,11 @@ export const Hero = ({
     FetchCharacterApi(idUser);
   }, [indexCharacter])
 
-  const currentBackground = useLoader(
-    TextureLoader,
-    getAccessories.background!
-  );
+  // Chargement du background
+  const currentBackground = useLoader( TextureLoader, getAccessories.background! );
 
   // Composant d'un accessoire
-  const Accessory = ({
-    src,
-    clone,
-  }: {
-    src: string | null;
-    clone?: boolean;
-  }) => {
+  const Accessory = ({ src, clone, }: { src: string | null; clone?: boolean; }) => {
     if (src === null) return null;
     const gltf = useGLTF(src, true);
     if (clone) {
@@ -166,10 +147,7 @@ export const Hero = ({
         }}
       >
         <mesh scale={100} position={[0, 0, 0]}>
-          <meshStandardMaterial
-            map={currentBackground}
-            side={THREE.DoubleSide}
-          />
+          <meshStandardMaterial map={currentBackground} side={THREE.DoubleSide} />
           <sphereGeometry />
         </mesh>
         <ambientLight intensity={0.4} />
@@ -200,11 +178,7 @@ export const Hero = ({
           <mesh position={anc.foot_l} scale={[sX, sX, sX]} rotation={[0, 0, 0]}>
             <Accessory src={getAccessories.feet} />
           </mesh>
-          <mesh
-            position={anc.foot_r}
-            scale={[-sX, sX, sX]}
-            rotation={[0, 0, 0]}
-          >
+          <mesh position={anc.foot_r} scale={[-sX, sX, sX]} rotation={[0, 0, 0]} >
             <Accessory src={getAccessories.feet} clone={true} />
           </mesh>
         </primitive>
