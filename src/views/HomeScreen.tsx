@@ -1,12 +1,13 @@
 import { useGLTF } from "@react-three/drei";
 import { Hero } from "../components/Hero";
 
-const HomeScreen = () => {
+const HomeScreen = ({GoToAR,}: { GoToAR: () => void; }) => {
   /* ---- INIT ---- */
   //state
   const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
 
   /* ---- REACT ---- */
+
 
   /* ---- RENDER ---- */
   return (
@@ -16,7 +17,7 @@ const HomeScreen = () => {
       </section>
       <section className="w-screen bottom-8 flex flex-col gap-8 h-1/3 z-10" >
         <a className="shutter"></a>
-        <button className="btn btn-ar">
+        <button className="btn btn-ar" onClick={GoToAR}>
           <i className="fa-solid fa-child-reaching"></i> Jouons
         </button>
       </section>

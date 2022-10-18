@@ -14,6 +14,8 @@ import Credits from "./views/Credits";
 import Notifications from "./views/Notifications";
 import Gallery from "./views/Gallery";
 import Customizer from "./views/Customizer"
+import QRscreen from './views/QRscreen';
+import ARView from './views/ARView'
 
 /* --------------------------------- Interacts --------------------------------- */
 interface UserInfo {id: number; pseudo: string;}
@@ -24,7 +26,7 @@ function App(): JSX.Element {
   /* ----------- state ----------- */
   const userInfo= JSON.parse(localStorage.getItem('userInfo')) 
   const [location, setLocation] = useState(''); // par défaut dit que le path = HomeScreen pour bypasser l'écran de connection si on a déjà userInfo dans local storage
-  const pages = ['Accueil', 'HomeScreen', 'Credits', 'Notifications', 'Gallery', 'Customizer'];
+  const pages = ['Accueil', 'HomeScreen', 'Credits', 'Notifications', 'Gallery', 'Customizer', 'ARView'];
 
   const menuPages = [
     // on défini les liens à afficher dans le menu ainsi que la classe que leur icone utilisera
@@ -33,7 +35,8 @@ function App(): JSX.Element {
     {name: 'Notifications', class: 'fa-envelope'},
     {name: 'Gallery', class: 'fa-film'},
     {name: 'Credits', class: 'fa-laptop-code'},
-    {name: 'Customizer', class: 'fa-wand-magic-sparkles'}
+    {name: 'Customizer', class: 'fa-wand-magic-sparkles'},
+    {name: 'ARView', class: 'fa-wand-magic-sparkles'}
   ]
 
   useEffect( () => {
@@ -86,6 +89,9 @@ function App(): JSX.Element {
   const handleRedirect = () => {
     setLocation('HomeScreen')
   }
+  const GoToAR = () => {
+    setLocation('ARView')
+  }
 
 /* ----------- rendu ----------- */
   return (<>
@@ -135,11 +141,12 @@ function App(): JSX.Element {
         { // permet d'afficher l'écran de connexion quand on le clique depuis le menu. Utile tant qu'on développe, on peut le retirer par après 
           location === 'Accueil' && <Accueil handleRedirect={handleRedirect} />} 
           {/* Si il y a bien un élément userInfo dans le localStorage, alors on permet l'accès aux routes ci-dessous */}
-        {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'HomeScreen' && <HomeScreen />}
+        {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'HomeScreen' && <HomeScreen GoToAR={GoToAR}/>}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Credits' && <Credits />}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Notifications' && <Notifications />}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Gallery' && <Gallery />}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Customizer' && <Customizer />} 
+        {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'ARView' && <ARView />} 
 </>)
 }
 export default App;
