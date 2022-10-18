@@ -16,6 +16,7 @@
     "daisyui": "^2.31.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
     "react-swipeable": "^7.0.0",
     "sass": "^1.55.0",
     "swiper": "^8.4.2"
@@ -24,6 +25,7 @@
     "@types/node": "^18.8.2",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@types/react-helmet": "^6.1.5",
     "@vitejs/plugin-react": "^2.1.0",
     "autoprefixer": "^10.4.12",
     "postcss": "^8.4.16",
