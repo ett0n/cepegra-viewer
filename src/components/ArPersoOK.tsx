@@ -28,7 +28,7 @@ const ArpersoOK = () => {
   return (
     <div className="App">
     <model-viewer src="./assets/character/character-fake.glb"
-    poster="https://cdn.glitch.com/36cb8393-65c6-408d-a538-055ada20431b%2Fposter-astronaut.png?v=1599079951717"
+    poster="./assets/img/poster.png"
     alt="A 3D model of an astronaut"
     shadow-intensity="1"
     camera-controls
@@ -49,7 +49,7 @@ if (AR.canActivateAR === false){
   </Helmet> 
   <div id="error" ><h1>AR is not supported on this device</h1></div>
 */}
-<div id="error">{msg}</div>
+{/* <div id="error">{msg}</div> */}
 <button slot="ar-button" id="ar-button">
 Voir en AR
 </button>

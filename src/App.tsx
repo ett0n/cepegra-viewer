@@ -83,7 +83,8 @@ function App(): JSX.Element {
     // quand l'user clique pour se déconnecter, on lui demande de confirmer son choix. Si confirmation -> on détruit le local storage et redirige sur l'accueil
     if (confirm(`Voulez-vous vraiment vous déconnecter ? Vous ne pourrez plus accéder à vos personnage sans votre mot de passe ou votre code QR`) == true ) {
       localStorage.removeItem('userInfo')
-      window.location.href = 'Accueil'
+      setLocation('Accueil')
+      window.location.href = ''
     } else {
       alert("vous avez choisi de ne pas vous déconecter")
     }
@@ -150,6 +151,7 @@ function App(): JSX.Element {
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Gallery' && <Gallery />}
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'Customizer' && <Customizer getIDCharacter={getIDCharacter} setIDCharacter={setIDCharacter} getIDAccessories={getIDAccessories} setIDAccessories={setIDAccessories} />} 
         {JSON.parse(localStorage.getItem('userInfo')) !== null && location === 'ARView' && <ARView />} 
+        {/* {location === 'editor/'&& window.location.href = 'editor/'} */}
 </>)
 }
 export default App;
