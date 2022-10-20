@@ -1,0 +1,16 @@
+{
+  "resources": [
+    {
+      "title": "Bulbasaur",
+      "imageUrl": "./assets/charaTemp/bulbasaur.png"
+    },
+    {
+      "title": "Charmander",
+      "imageUrl": "./assets/charaTemp/charmander.png"
+    },
+    {
+      "title": "Squirtle",
+      "imageUrl": "./assets/charaTemp/squirtle.png"
+    }
+  ]
+}
