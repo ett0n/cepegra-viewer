@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import "@google/model-viewer/dist/model-viewer"; 
-import {Helmet} from "react-helmet";
 import index from "../index.scss";
 import type from "../types/modelviewer";
 
@@ -23,7 +22,7 @@ const ArpersoOK = () => {
     console.log("model-viewer can activate AR: " + modelViewer.canActivateAR);
     */
   }, [])
-  // ⬆️ ceci était censé être un message d'erreur s'affichant quand l'AR n'est pas supporté. Cependant, le message d'erreur s'affiche même sur certains devices supportant l'AR
+  // ⬆️ ceci était censé être un message d'erreur s'affichant quand l'AR n'est pas supporté. Cependant, le message d'erreur s'affiche même sur certains devices supportant l'AR. Bonne chance pour débugg ça, on s'est arraché les cheveux (enfin surtout Alex)
 
   return (
     <div className="App">
@@ -41,7 +40,7 @@ const polak = JSON.stringify(AR.ar-status);
 console.log(polak);
 
 if (AR.canActivateAR === false){
-  alert("NIKE TOI TON DEVICE EST PAS COMPATIBLE")
+  alert("DEVICE NON COMPATIBLE")
 } else{
   alert("L'AR est compatible avec ton device")
 }</>

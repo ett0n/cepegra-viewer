@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-nocheck il n'y a qu'une erreur TS en ligne 96 mais c'est sur un code que j'ai repiqué à Lucie et qui n'a pas cette erreur, je sais pas pourquoi
 /* ----------------------------------- Import ----------------------------------- */
 import Axios from "axios";
 import React, { useState, useEffect } from "react";
@@ -15,8 +15,8 @@ const Accueil = ({handleRedirect}) => {
   /* ----------- state ----------- */
 
   const [getUser, setUser] = useState<UserInfo>();
-  const [pseudalInput, setPseudalInput] = useState<string>(""); // on référence le champ du formulaire
-  const [GetShowQR, SetShowQR] = useState(false)
+  const [pseudalInput, setPseudalInput] = useState<string>(""); 
+  const [getShowQR, setShowQR] = useState(false)
   const [getQrResult, setQrResult] = useState<string>("");
 
   useEffect(() => {
@@ -30,7 +30,6 @@ const Accueil = ({handleRedirect}) => {
       //met un utilisateur avec un pseudonyme unique de sorte a différencier le onmount et quand l'utilisateur n'existe pas
       if (apiDatas.data.data.length === 0) setUser({ id: -1, pseudo: "" });
       else setUser({ id: apiDatas.data.data[0].id, pseudo: apiDatas.data.data[0].attributes.pseudo });
-      // on crée un tableau qui comporte id et pseudo et on le stock dans user
     } catch (error) {
       console.log("api down", error);
     }
@@ -61,7 +60,6 @@ const Accueil = ({handleRedirect}) => {
         // si result = 1 alors on on stocke le tableau user en localStorage et on redirige sur HomeScreen
         localStorage.setItem("userInfo", JSON.stringify(getUser));
         handleRedirect()
-        // window.location.href = "HomeScreen";
       }
     }
   };
@@ -72,29 +70,30 @@ const Accueil = ({handleRedirect}) => {
     setPseudalInput(ev.target.value);
   };
 
+  // Code pour appeler afficher/masquer le composant de scan du QR
   const HandleQR = () => {
-    SetShowQR(!GetShowQR)
-    // TEMP fix, wonrgly set the localStorage to userInfo with id 1, then redirect to the HomeScreen
+    setShowQR(!getShowQR)
+    // fix temproraire pour forcer la mise en localSotrage de User1 et pouvoir simuler le scan de QR
+    localStorage.setItem("userInfo", JSON.stringify({"id":1,"pseudo":"User1"}))
     setTimeout(() => {
       handleRedirect()
     }, 5000)
   }
-  console.log(getQrResult)
+  
   /* ---------- render ---------- */
   return (
-    // <main className="flex flex-col justify-between h-screen">
       <main>
-      <button className="btn btn-block py-2 rounded-none btn-primary">
+      <button className="btn btn-block py-2 rounded-none btn-primary install">
         <i className="fa-sharp fa-solid fa-download px-4"></i> Installer l'application
       </button>
       <h1 className="text-2xl font-bold text-center">MetaMorpho</h1>
       <section className="flex flex-col my-0 mx-auto w-4/5">
-        <button className="btn my-4" onClick={HandleQR}>Scanner QR Code</button> {/* non fonctionnel pour le moment*/}
+        <button className="btn my-4" onClick={HandleQR}>Scanner QR Code</button>
         <div className="flex flex-col w-full border-opacity-50">
           <div className="divider">Se connecter</div>
         </div>
-        {GetShowQR && <QrReader setQrResult={setQrResult} />}
-        { !GetShowQR &&  <form className="flex flex-col" onSubmit={HandleSubmit}>
+        {getShowQR && <QrReader setQrResult={setQrResult} />}
+        { !getShowQR &&  <form className="flex flex-col" onSubmit={HandleSubmit}>
          
           <div className="flex">
             <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={HandleChange} value={pseudalInput} />

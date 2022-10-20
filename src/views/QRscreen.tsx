@@ -1,5 +1,7 @@
 // @ts-nocheck
 
+// Ancien composant test, on l'a migré correctement sur Accueil mais je le garde pour trace
+
 import { useState } from "react";
 import QrReader from "../components/QrReader"
 import React from "react"
